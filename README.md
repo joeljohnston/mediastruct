@@ -6,30 +6,30 @@ I have a data archive workflow that consists of an ingest filesystem for all new
 
 Here's how it works:
 
-Ingester
+Ingest
 1. Takes ingest directory as argument
 2. Renames files with datetime hash preserving extension
 3. Organizes by date into target directory
 
-Crawler
+Crawl
 1. Takes n number of directory structures as arguments
 2. Detects the machines's number of cores
 3. Splits the crawl tree into appropriate number of threads
 4. Crawls the trees and creates a master index file of 3 fields, path, hash, size.
 5. Detects age of index files (if existing) and decides whethere or not to reindex (useful for a huge static master archive directory structure that doesn't change)
 
-DupeFinder
+DeDupe
 1. loads the master index file (that includes paths and file hashes)
 2. compares hashes and finds duplicates
 3. creates a list of duplicates
 
-Sorter
+Sort
 1. takes arguments suggesting which directory tree is considered "master" (and should not be modified)
 2. takes arguments for where to move duplicate files (never deletes anything)
 3. takes list of duplicates
 4. moves duplicate files out of non-master directory structures into the specified target directory (avoiding name collisions)
 
-Archiver
+Archive
 1. Creates Archive target directory and calculates the target size of contents based on index file sources
 2. Moves files into Archive directory structure, keeping date folder structure intact across multiple optical archive target directories
 3. Marks unburned directories accordingly
