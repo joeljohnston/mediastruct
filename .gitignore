@@ -1,0 +1,11 @@
+env/
+env/*
+*.pyc
+.pyc
+<<<<<<< HEAD
+=======
+*.pyo
+.DS_Store
+.coverage
+local_settings.py
+>>>>>>> remotes/origin/prod
