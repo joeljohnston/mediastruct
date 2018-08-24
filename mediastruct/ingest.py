@@ -4,6 +4,13 @@ import time
 import shutil
 from glob import glob
 
+
+
+
+class ingest:
+	def __init__(self):
+		
+
 fromdir = sys.argv[1]
 print "From Dir:%s" % (fromdir)
 todir = sys.argv[2]
