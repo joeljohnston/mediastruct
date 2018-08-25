@@ -8,4 +8,5 @@ from glob import glob
 
 
 class validate:
-        def __init__(self):
+    def __init__(self):
+        print("yeah that's right")

@@ -8,4 +8,5 @@ from glob import glob
 
 
 class crawl:
-        def __init__(self):
+    def __init__(self):
+        print("yea")

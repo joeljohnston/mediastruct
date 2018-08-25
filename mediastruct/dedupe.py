@@ -8,4 +8,5 @@ from glob import glob
 
 
 class dedupe:
-        def __init__(self):
+    def __init__(self):
+        print("yeah")
