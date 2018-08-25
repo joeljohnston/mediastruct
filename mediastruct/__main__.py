@@ -3,8 +3,10 @@ import sys
 import configparser
 import io
 
+#add path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
+#import local classes
 import ingest
 import crawl
 import dedupe
@@ -13,26 +15,25 @@ import archive
 import validate
 
 def _launch():
-    print("Running MediaStruct")
-    #importing config file
+    #config files - create with defaults if they don't exist
     configfile_name = "conf/config.ini"
     if not os.path.isfile(configfile_name):
         cfgfile = open(configfile_name, 'w')
 
-        Config = configparser.ConfigParser()
-        Config.add_section('ingestdirs')
-        Config.set('ingestdirs','ingestdir','/data/ingest')
-        Config.add_section('workingdirs')
-        Config.set('workingdirs','workingdir','/data/media')
-        Config.add_section('archivedir')
-        Config.set('archivedir','archivedir','/archive')
-        Config.add_section('archivemedia')
-        Config.set('archivemedia','mediasize','24')
-        Config.set('archivemedia','burnedtag','wr')
-        Config.add_section('duplicates')
-        Config.set('duplicates','duplicatedir','/data/duplicates')
+        appConfig = configparser.ConfigParser()
+        appConfig.add_section('ingestdirs')
+        appConfig.set('ingestdirs','ingestdir','/data/ingest')
+        appConfig.add_section('workingdirs')
+        appConfig.set('workingdirs','workingdir','/data/media')
+        appConfig.add_section('archivedir')
+        appConfig.set('archivedir','archivedir','/archive')
+        appConfig.add_section('archivemedia')
+        appConfig.set('archivemedia','mediasize','24')
+        appConfig.set('archivemedia','burnedtag','wr')
+        appConfig.add_section('duplicates')
+        appConfig.set('duplicates','duplicatedir','/data/duplicates')
 
-        Config.write(cfgfile)
+        appConfig.write(cfgfile)
         cfgfile.close()
     else:
         config = configparser.ConfigParser()
@@ -48,7 +49,7 @@ def _launch():
         crawl()
 
     if sys.argv[1] == 'ingest':
-        a = ingest.ingest()
+        a = ingest.ingest(ingestdir,archivedir)
         print("test")
 
     if sys.argv[1] == 'dedupe':

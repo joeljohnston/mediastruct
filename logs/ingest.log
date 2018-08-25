@@ -1,0 +1,3 @@
+ERROR:root:Source Directory /data/ingest doesn't exist
+2018-08-25 11:59:32,139 - ingest - INFO - Dirctory root: /data/ingest
+2018-08-25 11:59:32,139 - ingest - ERROR - Source Directory /data/ingest doesn't exist
