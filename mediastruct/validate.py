@@ -7,6 +7,6 @@ from glob import glob
 
 
 
-class dedupe:
+class validate:
     def __init__(self):
-        print("yeah")
+        print("yeah that's right")
