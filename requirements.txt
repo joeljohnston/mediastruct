@@ -1,6 +1,3 @@
 dicttools
-<<<<<<< HEAD:requirements.txt
 pillow
-=======
 configparser
->>>>>>> daa9a011b982e42bb7db38ede727c9a7d71cecb0:requiremente.txt
