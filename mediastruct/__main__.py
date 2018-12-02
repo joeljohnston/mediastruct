@@ -27,17 +27,6 @@ one_up = os.path.dirname(os.path.realpath(__file__)) + '/../'
 app_path = os.path.join(this_path, one_up)
 config_path = app_path + 'conf/'
 
-##############################################################
-# Logging
-##############################################################
-log_path = app_path + 'logs/mediastruct.log'
-logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p %Z -')
-console = logging.StreamHandler()
-console.setLevel(logging.INFO)
-formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
-console.setFormatter(formatter)
-logging.getLogger('').addHandler(console)
-
 #############################################################
 # Config files - create with defaults if they don't exist
 #############################################################
@@ -67,12 +56,24 @@ else:
     config = configparser.ConfigParser()
     config.read('conf/config.ini')
     ingestdir = config['ingestdirs']['ingestdir']
-    workingdirs =  config['workingdirs']['workingdir']
-    archivedir =  config['archivedir']['archivedir']
+    workingdirs = config['workingdirs']['workingdir']
+    archivedir = config['archivedir']['archivedir']
     mediasize = config['archivemedia']['mediasize']
     burnedtag = config['archivemedia']['burnedtag']
     duplicatedir = config['duplicates']['duplicatedir']
     jsondatadir = config['datadir']['jsondatadir']
+    logdir = config['datadir']['logdir']
+
+##############################################################
+# Logging
+##############################################################
+log_path = logdir + '/mediastruct.log' 
+logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p %Z -')
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
+console.setFormatter(formatter)
+logging.getLogger('').addHandler(console)
 
 def _launch():
     if sys.argv[1] == 'crawl':
