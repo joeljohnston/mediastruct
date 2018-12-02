@@ -57,6 +57,9 @@ if not os.path.isfile(configfile_name):
     appConfig.set('archivemedia','burnedtag','wr')
     appConfig.add_section('duplicates')
     appConfig.set('duplicates','duplicatedir','/data/duplicates')
+    appConfig.add_section('datadir')
+    appConfig.set('datadir','jsondatadir','data')
+    appConfig.set('datadir','logdir','logs')
 
     appConfig.write(cfgfile)
     cfgfile.close()
@@ -69,13 +72,14 @@ else:
     mediasize = config['archivemedia']['mediasize']
     burnedtag = config['archivemedia']['burnedtag']
     duplicatedir = config['duplicates']['duplicatedir']
+    jsondatadir = config['datadir']['jsondatadir']
 
 def _launch():
     if sys.argv[1] == 'crawl':
-        ingestsum = crawl.crawl(ingestdir)
-        #workingdirsum = crawl(workingdir)
-        #archivedirsum = crawl(archivedir)
-        #duplicatedirsum = crawl(duplicatedir)
+        ingestsum = crawl.crawl(ingestdir,jsondatadir)
+        #workingdirsum = crawl(workingdir,jsondatadir)
+        #archivedirsum = crawl(archivedir,jsondatadir)
+        #duplicatedirsum = crawl(duplicatedir,jsondatadir)
 
     if sys.argv[1] == 'ingest':
         a = ingest.ingest(ingestdir,workingdirs)

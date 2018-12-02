@@ -7,3 +7,4 @@ env/*
 .coverage
 local_settings.py
 *.log
+*.json
