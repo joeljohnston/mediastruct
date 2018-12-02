@@ -56,7 +56,7 @@ else:
     config = configparser.ConfigParser()
     config.read('conf/config.ini')
     ingestdir = config['ingestdirs']['ingestdir']
-    workingdirs = config['workingdirs']['workingdir']
+    workingdir = config['workingdirs']['workingdir']
     archivedir = config['archivedir']['archivedir']
     mediasize = config['archivemedia']['mediasize']
     burnedtag = config['archivemedia']['burnedtag']
@@ -78,8 +78,8 @@ logging.getLogger('').addHandler(console)
 def _launch():
     if sys.argv[1] == 'crawl':
         ingestsum = crawl.crawl(ingestdir,jsondatadir)
-        #workingdirsum = crawl(workingdir,jsondatadir)
-        #archivedirsum = crawl(archivedir,jsondatadir)
+        workingdirsum = crawl.crawl(workingdir,jsondatadir)
+        archivedirsum = crawl.crawl(archivedir,jsondatadir)
         #duplicatedirsum = crawl(duplicatedir,jsondatadir)
 
     if sys.argv[1] == 'ingest':

@@ -1,2 +1,186 @@
 12/01/2018 04:36:09 PM PST - Running Crawl init
 12/01/2018 04:36:14 PM PST - {'7219662fe8075dc193346b04e94b41e8': {'path': '/data/ingest/2013/vzDDulhGlNjeGiqT.jpg', 'filesize': 2030899}, 'a5f3eddad81e93e26f131715b1446083': {'path': '/data/ingest/2013/4/PyZwRsCkvXtylQGw.txt', 'filesize': 170841}, 'fef70eb2f5111372264335db9bea984c': {'path': '/data/ingest/2013/11/osAjhooperhNrBQD.jpg', 'filesize': 151319}, '042e0f82b76457c5924e150e2a744fdc': {'path': '/data/ingest/2013/10/MFdidwgFgmOQoznW.jpg', 'filesize': 3108426}, '8480e06f47242e5fe570031f334c53e4': {'path': '/data/ingest/WeZkZIQhtIHGldWb/GXxwhvsZYxdkSnPM/GTqgfkszCupmhytd.jpg', 'filesize': 2599906}, 'f0d11d7072ecbaa4a4dd6f9f34846b74': {'path': '/data/ingest/2014/8/mJNiXVgaqyWMgQTl.txt', 'filesize': 371742}, '4179ec6f2ca13968ae4b3c8341b9fae0': {'path': '/data/ingest/2014/1/VFPBfRkWyPZcNgIg.mp4', 'filesize': 128592902}, '13059a9ebf6ad4a83f12164f0bd5d975': {'path': '/data/ingest/2016/PgPwQWRcPvysClPi.jpg', 'filesize': 4528645}, '3f87be0b1eba26f8e0ad95de09dd8a12': {'path': '/data/ingest/2016/wXPpwOxFiInraHLx.mp4', 'filesize': 129008816}, '296c9b8148dad506a7133410015f4a33': {'path': '/data/ingest/2016/12/tXkucTHQELcnbMeu.mp4', 'filesize': 194943429}, '2d893726476cd34885227452335b50eb': {'path': '/data/ingest/XfIKWDHZdxYoFirP/CioSpGdyOnlTUaDB.jpg', 'filesize': 2014858}, '2bab72e10b92f429b06af45ee6d4141a': {'path': '/data/ingest/yrSnRNWRMpBUHvMw/pxpFFxQuvbvaklhn/HcnNWRdQsCjlfhbq.jpg', 'filesize': 2984438}, 'feeea86c760f96c9e4319fa98e084858': {'path': '/data/ingest/miViMnQPRtBwhgqS/jEqByXYcyhiZYwoa.txt', 'filesize': 422343}, 'fa3750d46e63a1678c900bc20034869e': {'path': '/data/ingest/2017/MGoVGKOkIxtZuzHY.jpg', 'filesize': 492073}, '434cc92e8b9785f22629a4bc80b99cc6': {'path': '/data/ingest/2017/6/WSVVvxyNHwPySPxA.jpg', 'filesize': 2665525}, '73fccc9b9aa130ee0290f93afc9be895': {'path': '/data/ingest/qRvGxrUIyAxrNTHb/dHGZcIXBIeZuImbR.mp4', 'filesize': 117392863}, '8ce28ed0e3cf0441373aff566b9d312b': {'path': '/data/ingest/2015/2/KluOLoFhtbaQEJsi.mp4', 'filesize': 192865384}, '498a79ae79d6851bdde4ad45750a9107': {'path': '/data/ingest/2015/7/TcLykirGUntWzASw.jpg', 'filesize': 3233735}, 'c6ac15aa61b43fa97a871b1be62661b1': {'path': '/data/ingest/2015/11/IECiBGEjYKcaDTfd.mp4', 'filesize': 283070897}, '6d969f273caa24ab8899d25a4efec59e': {'path': '/data/ingest/UCaISsWjGuTzVbdj/AbaDaUCBKAZxFSeQ.txt', 'filesize': 396291}, '7009960303d33c703eb415f3c9a225bd': {'path': '/data/ingest/UCaISsWjGuTzVbdj/ZirQxAOkqwyRKFiA.mp4', 'filesize': 334490513}, '482a8a37420a2b9d18383cd712a4cf5c': {'path': '/data/ingest/VqcCFbruEHgEuMHX/KnSHkkFilHQIJENW.txt', 'filesize': 329658}, 'd810b7461ff0a52dbf8fc7ffa43baeca': {'path': '/data/ingest/2012/8/GEYOWjnyfbbKKiOD.mp4', 'filesize': 347351142}, '98bae6eecc57af5bd20b240e131bd5a7': {'path': '/data/ingest/2012/5/sLVXEGAJznvclZkZ.mp4', 'filesize': 144960551}, 'du': 1898177196}
+12/01/2018 04:39:39 PM PST - Running Crawl init
+12/01/2018 04:39:39 PM PST - The Index matches the Directory
+12/01/2018 04:43:27 PM PST - Dirctory root: /data/ingest
+12/01/2018 04:43:27 PM PST - filename: vzDDulhGlNjeGiqT.jpg
+12/01/2018 04:43:27 PM PST - ext: jpg
+12/01/2018 04:43:27 PM PST - file: vzDDulhGlNjeGiqT
+12/01/2018 04:43:27 PM PST - newfilename: vzDDulhGlNjeGiqT.1543711407573.jpg
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2013/vzDDulhGlNjeGiqT.jpg
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2017/11/vzDDulhGlNjeGiqT.jpg
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2017/11/vzDDulhGlNjeGiqT.1543711407573.jpg
+12/01/2018 04:43:27 PM PST - filename: PyZwRsCkvXtylQGw.txt
+12/01/2018 04:43:27 PM PST - ext: txt
+12/01/2018 04:43:27 PM PST - file: PyZwRsCkvXtylQGw
+12/01/2018 04:43:27 PM PST - newfilename: PyZwRsCkvXtylQGw.1543711407574.txt
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2013/4/PyZwRsCkvXtylQGw.txt
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2018/12/PyZwRsCkvXtylQGw.txt
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2018/12/PyZwRsCkvXtylQGw.1543711407574.txt
+12/01/2018 04:43:27 PM PST - filename: osAjhooperhNrBQD.jpg
+12/01/2018 04:43:27 PM PST - ext: jpg
+12/01/2018 04:43:27 PM PST - file: osAjhooperhNrBQD
+12/01/2018 04:43:27 PM PST - newfilename: osAjhooperhNrBQD.1543711407575.jpg
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2013/11/osAjhooperhNrBQD.jpg
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2015/3/osAjhooperhNrBQD.jpg
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2015/3/osAjhooperhNrBQD.1543711407575.jpg
+12/01/2018 04:43:27 PM PST - filename: MFdidwgFgmOQoznW.jpg
+12/01/2018 04:43:27 PM PST - ext: jpg
+12/01/2018 04:43:27 PM PST - file: MFdidwgFgmOQoznW
+12/01/2018 04:43:27 PM PST - newfilename: MFdidwgFgmOQoznW.1543711407576.jpg
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2013/10/MFdidwgFgmOQoznW.jpg
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2016/1/MFdidwgFgmOQoznW.jpg
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2016/1/MFdidwgFgmOQoznW.1543711407576.jpg
+12/01/2018 04:43:27 PM PST - filename: GTqgfkszCupmhytd.jpg
+12/01/2018 04:43:27 PM PST - ext: jpg
+12/01/2018 04:43:27 PM PST - file: GTqgfkszCupmhytd
+12/01/2018 04:43:27 PM PST - newfilename: GTqgfkszCupmhytd.1543711407577.jpg
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/WeZkZIQhtIHGldWb/GXxwhvsZYxdkSnPM/GTqgfkszCupmhytd.jpg
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2017/4/GTqgfkszCupmhytd.jpg
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2017/4/GTqgfkszCupmhytd.1543711407577.jpg
+12/01/2018 04:43:27 PM PST - filename: mJNiXVgaqyWMgQTl.txt
+12/01/2018 04:43:27 PM PST - ext: txt
+12/01/2018 04:43:27 PM PST - file: mJNiXVgaqyWMgQTl
+12/01/2018 04:43:27 PM PST - newfilename: mJNiXVgaqyWMgQTl.1543711407578.txt
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2014/8/mJNiXVgaqyWMgQTl.txt
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2018/12/mJNiXVgaqyWMgQTl.txt
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2018/12/mJNiXVgaqyWMgQTl.1543711407578.txt
+12/01/2018 04:43:27 PM PST - filename: VFPBfRkWyPZcNgIg.mp4
+12/01/2018 04:43:27 PM PST - ext: mp4
+12/01/2018 04:43:27 PM PST - file: VFPBfRkWyPZcNgIg
+12/01/2018 04:43:27 PM PST - newfilename: VFPBfRkWyPZcNgIg.1543711407579.mp4
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2014/1/VFPBfRkWyPZcNgIg.mp4
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2012/10/VFPBfRkWyPZcNgIg.mp4
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2012/10/VFPBfRkWyPZcNgIg.1543711407579.mp4
+12/01/2018 04:43:27 PM PST - filename: PgPwQWRcPvysClPi.jpg
+12/01/2018 04:43:27 PM PST - ext: jpg
+12/01/2018 04:43:27 PM PST - file: PgPwQWRcPvysClPi
+12/01/2018 04:43:27 PM PST - newfilename: PgPwQWRcPvysClPi.1543711407580.jpg
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2016/PgPwQWRcPvysClPi.jpg
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2017/3/PgPwQWRcPvysClPi.jpg
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2017/3/PgPwQWRcPvysClPi.1543711407580.jpg
+12/01/2018 04:43:27 PM PST - filename: wXPpwOxFiInraHLx.mp4
+12/01/2018 04:43:27 PM PST - ext: mp4
+12/01/2018 04:43:27 PM PST - file: wXPpwOxFiInraHLx
+12/01/2018 04:43:27 PM PST - newfilename: wXPpwOxFiInraHLx.1543711407581.mp4
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2016/wXPpwOxFiInraHLx.mp4
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2014/5/wXPpwOxFiInraHLx.mp4
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2014/5/wXPpwOxFiInraHLx.1543711407581.mp4
+12/01/2018 04:43:27 PM PST - filename: tXkucTHQELcnbMeu.mp4
+12/01/2018 04:43:27 PM PST - ext: mp4
+12/01/2018 04:43:27 PM PST - file: tXkucTHQELcnbMeu
+12/01/2018 04:43:27 PM PST - newfilename: tXkucTHQELcnbMeu.1543711407581.mp4
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2016/12/tXkucTHQELcnbMeu.mp4
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2015/8/tXkucTHQELcnbMeu.mp4
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2015/8/tXkucTHQELcnbMeu.1543711407581.mp4
+12/01/2018 04:43:27 PM PST - filename: CioSpGdyOnlTUaDB.jpg
+12/01/2018 04:43:27 PM PST - ext: jpg
+12/01/2018 04:43:27 PM PST - file: CioSpGdyOnlTUaDB
+12/01/2018 04:43:27 PM PST - newfilename: CioSpGdyOnlTUaDB.1543711407582.jpg
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/XfIKWDHZdxYoFirP/CioSpGdyOnlTUaDB.jpg
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2013/8/CioSpGdyOnlTUaDB.jpg
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2013/8/CioSpGdyOnlTUaDB.1543711407582.jpg
+12/01/2018 04:43:27 PM PST - filename: HcnNWRdQsCjlfhbq.jpg
+12/01/2018 04:43:27 PM PST - ext: jpg
+12/01/2018 04:43:27 PM PST - file: HcnNWRdQsCjlfhbq
+12/01/2018 04:43:27 PM PST - newfilename: HcnNWRdQsCjlfhbq.1543711407583.jpg
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/yrSnRNWRMpBUHvMw/pxpFFxQuvbvaklhn/HcnNWRdQsCjlfhbq.jpg
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2014/11/HcnNWRdQsCjlfhbq.jpg
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2014/11/HcnNWRdQsCjlfhbq.1543711407583.jpg
+12/01/2018 04:43:27 PM PST - filename: jEqByXYcyhiZYwoa.txt
+12/01/2018 04:43:27 PM PST - ext: txt
+12/01/2018 04:43:27 PM PST - file: jEqByXYcyhiZYwoa
+12/01/2018 04:43:27 PM PST - newfilename: jEqByXYcyhiZYwoa.1543711407583.txt
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/miViMnQPRtBwhgqS/jEqByXYcyhiZYwoa.txt
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2018/12/jEqByXYcyhiZYwoa.txt
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2018/12/jEqByXYcyhiZYwoa.1543711407583.txt
+12/01/2018 04:43:27 PM PST - filename: MGoVGKOkIxtZuzHY.jpg
+12/01/2018 04:43:27 PM PST - ext: jpg
+12/01/2018 04:43:27 PM PST - file: MGoVGKOkIxtZuzHY
+12/01/2018 04:43:27 PM PST - newfilename: MGoVGKOkIxtZuzHY.1543711407584.jpg
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2017/MGoVGKOkIxtZuzHY.jpg
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2014/9/MGoVGKOkIxtZuzHY.jpg
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2014/9/MGoVGKOkIxtZuzHY.1543711407584.jpg
+12/01/2018 04:43:27 PM PST - filename: WSVVvxyNHwPySPxA.jpg
+12/01/2018 04:43:27 PM PST - ext: jpg
+12/01/2018 04:43:27 PM PST - file: WSVVvxyNHwPySPxA
+12/01/2018 04:43:27 PM PST - newfilename: WSVVvxyNHwPySPxA.1543711407584.jpg
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2017/6/WSVVvxyNHwPySPxA.jpg
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2012/3/WSVVvxyNHwPySPxA.jpg
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2012/3/WSVVvxyNHwPySPxA.1543711407584.jpg
+12/01/2018 04:43:27 PM PST - filename: dHGZcIXBIeZuImbR.mp4
+12/01/2018 04:43:27 PM PST - ext: mp4
+12/01/2018 04:43:27 PM PST - file: dHGZcIXBIeZuImbR
+12/01/2018 04:43:27 PM PST - newfilename: dHGZcIXBIeZuImbR.1543711407585.mp4
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/qRvGxrUIyAxrNTHb/dHGZcIXBIeZuImbR.mp4
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2013/12/dHGZcIXBIeZuImbR.mp4
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2013/12/dHGZcIXBIeZuImbR.1543711407585.mp4
+12/01/2018 04:43:27 PM PST - filename: KluOLoFhtbaQEJsi.mp4
+12/01/2018 04:43:27 PM PST - ext: mp4
+12/01/2018 04:43:27 PM PST - file: KluOLoFhtbaQEJsi
+12/01/2018 04:43:27 PM PST - newfilename: KluOLoFhtbaQEJsi.1543711407586.mp4
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2015/2/KluOLoFhtbaQEJsi.mp4
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2016/10/KluOLoFhtbaQEJsi.mp4
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2016/10/KluOLoFhtbaQEJsi.1543711407586.mp4
+12/01/2018 04:43:27 PM PST - filename: TcLykirGUntWzASw.jpg
+12/01/2018 04:43:27 PM PST - ext: jpg
+12/01/2018 04:43:27 PM PST - file: TcLykirGUntWzASw
+12/01/2018 04:43:27 PM PST - newfilename: TcLykirGUntWzASw.1543711407587.jpg
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2015/7/TcLykirGUntWzASw.jpg
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2014/12/TcLykirGUntWzASw.jpg
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2014/12/TcLykirGUntWzASw.1543711407587.jpg
+12/01/2018 04:43:27 PM PST - filename: IECiBGEjYKcaDTfd.mp4
+12/01/2018 04:43:27 PM PST - ext: mp4
+12/01/2018 04:43:27 PM PST - file: IECiBGEjYKcaDTfd
+12/01/2018 04:43:27 PM PST - newfilename: IECiBGEjYKcaDTfd.1543711407587.mp4
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2015/11/IECiBGEjYKcaDTfd.mp4
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2012/4/IECiBGEjYKcaDTfd.mp4
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2012/4/IECiBGEjYKcaDTfd.1543711407587.mp4
+12/01/2018 04:43:27 PM PST - filename: AbaDaUCBKAZxFSeQ.txt
+12/01/2018 04:43:27 PM PST - ext: txt
+12/01/2018 04:43:27 PM PST - file: AbaDaUCBKAZxFSeQ
+12/01/2018 04:43:27 PM PST - newfilename: AbaDaUCBKAZxFSeQ.1543711407588.txt
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/UCaISsWjGuTzVbdj/AbaDaUCBKAZxFSeQ.txt
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2018/12/AbaDaUCBKAZxFSeQ.txt
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2018/12/AbaDaUCBKAZxFSeQ.1543711407588.txt
+12/01/2018 04:43:27 PM PST - filename: ZirQxAOkqwyRKFiA.mp4
+12/01/2018 04:43:27 PM PST - ext: mp4
+12/01/2018 04:43:27 PM PST - file: ZirQxAOkqwyRKFiA
+12/01/2018 04:43:27 PM PST - newfilename: ZirQxAOkqwyRKFiA.1543711407589.mp4
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/UCaISsWjGuTzVbdj/ZirQxAOkqwyRKFiA.mp4
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2015/11/ZirQxAOkqwyRKFiA.mp4
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2015/11/ZirQxAOkqwyRKFiA.1543711407589.mp4
+12/01/2018 04:43:27 PM PST - filename: KnSHkkFilHQIJENW.txt
+12/01/2018 04:43:27 PM PST - ext: txt
+12/01/2018 04:43:27 PM PST - file: KnSHkkFilHQIJENW
+12/01/2018 04:43:27 PM PST - newfilename: KnSHkkFilHQIJENW.1543711407589.txt
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/VqcCFbruEHgEuMHX/KnSHkkFilHQIJENW.txt
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2018/12/KnSHkkFilHQIJENW.txt
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2018/12/KnSHkkFilHQIJENW.1543711407589.txt
+12/01/2018 04:43:27 PM PST - filename: GEYOWjnyfbbKKiOD.mp4
+12/01/2018 04:43:27 PM PST - ext: mp4
+12/01/2018 04:43:27 PM PST - file: GEYOWjnyfbbKKiOD
+12/01/2018 04:43:27 PM PST - newfilename: GEYOWjnyfbbKKiOD.1543711407590.mp4
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2012/8/GEYOWjnyfbbKKiOD.mp4
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2015/10/GEYOWjnyfbbKKiOD.mp4
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2015/10/GEYOWjnyfbbKKiOD.1543711407590.mp4
+12/01/2018 04:43:27 PM PST - filename: sLVXEGAJznvclZkZ.mp4
+12/01/2018 04:43:27 PM PST - ext: mp4
+12/01/2018 04:43:27 PM PST - file: sLVXEGAJznvclZkZ
+12/01/2018 04:43:27 PM PST - newfilename: sLVXEGAJznvclZkZ.1543711407590.mp4
+12/01/2018 04:43:27 PM PST - filepath: /data/ingest/2012/5/sLVXEGAJznvclZkZ.mp4
+12/01/2018 04:43:27 PM PST - Destination Path: /data/media/2015/3/sLVXEGAJznvclZkZ.mp4
+12/01/2018 04:43:27 PM PST - newdest: /data/media/2015/3/sLVXEGAJznvclZkZ.1543711407590.mp4
+12/01/2018 04:53:31 PM PST - Running Crawl init
+12/01/2018 04:53:31 PM PST - {'du': 0}
+12/01/2018 04:54:19 PM PST - Running Crawl init
+12/01/2018 04:55:14 PM PST - Running Crawl init
+12/01/2018 04:55:43 PM PST - Running Crawl init
+12/01/2018 04:55:43 PM PST - Running Crawl init
+12/01/2018 04:57:15 PM PST - {'9df84855d96cae8b3de40af435b956d9': {'path': '/data/media/2013/3/YgCCVPjzEtjlVQbf.mp4', 'filesize': 190997189}, 'e06cef667c2f0678497b87be32b45f6b': {'path': '/data/media/2013/6/tOZzJgNhYZoKXJjj.mp4', 'filesize': 141864851}, '9dbaf514b7360aab082a37b1b4229004': {'path': '/data/media/2013/6/owXuDPeiiCKTBCFf.mp4', 'filesize': 177733892}, '16f85a6e7b94f382942f17f5081aebfa': {'path': '/data/media/2013/4/mxAegLBcwbhqugMw.jpg', 'filesize': 1629239}, '2875e22e33c32d52dc0522fea5833977': {'path': '/data/media/2013/4/ZEIZKuSitWVufLAL.1543636206773.jpg', 'filesize': 715905}, '5c2a9f746a3992e6d102679190a5e685': {'path': '/data/media/2013/8/cXmjfSkcMMNBoOJY.1543636206773.jpg', 'filesize': 874029}, 'a002540eff6599f4fcd0f230eafce5c0': {'path': '/data/media/2013/8/TrwUXyACPcopnBYH.jpg', 'filesize': 2289928}, '2d893726476cd34885227452335b50eb': {'path': '/data/media/2013/8/CioSpGdyOnlTUaDB.jpg', 'filesize': 2014858}, 'dbda05ced37916d1db9537e1c590585a': {'path': '/data/media/2013/5/wFXLxlBVVhTvqHef.1543636206774.jpg', 'filesize': 1556321}, 'd9ba211e15a2b886b6a6562970a8459e': {'path': '/data/media/2013/5/xMrWdDnzOlhWIqZn.mp4', 'filesize': 295093646}, 'e6ba45b9a63642e57520c703d6728042': {'path': '/data/media/2013/5/XItIqAcXggAapyzW.mp4', 'filesize': 326812339}, '60d81bc52451f9ca056be49cd3316876': {'path': '/data/media/2013/5/yDdZOUsnZqCiKsUC.mp4', 'filesize': 245533499}, '973180d3647ad63c21bc123fa507ae2d': {'path': '/data/media/2013/9/YjcIDmJfEjGELghQ.jpg', 'filesize': 2641614}, 'aaf6d7c7e467d890de4f589395adfe4c': {'path': '/data/media/2013/7/NXtigLWwapfxhumY.jpg', 'filesize': 375361}, 'c5974052142aaf0ad41cc37727916889': {'path': '/data/media/2013/7/zkVxPxtCRoSedGlm.jpg', 'filesize': 1933431}, '68af83f5290436d22a274701b0c5bbd3': {'path': '/data/media/2013/11/QWIDpGFBtwMYeIOv.jpg', 'filesize': 190153}, '57f577baf373a9f2a738ea54623ba9f7': {'path': '/data/media/2013/10/wdDZTwrWMLEQZCKD.1543636206775.mp4', 'filesize': 237241729}, '215a02d97622dfe432620951421e5040': {'path': '/data/media/2013/12/XRzQekTqmRvGYZqD.1543636206775.mp4', 'filesize': 207171940}, '73fccc9b9aa130ee0290f93afc9be895': {'path': '/data/media/2013/12/dHGZcIXBIeZuImbR.mp4', 'filesize': 117392863}, '3cbedb97724d8bcd6f41694b2f94c3df': {'path': '/data/media/2014/3/IXNOmBUNXdiWHomu.1543636206776.mp4', 'filesize': 367043581}, '3eb1c5539de9db9d25a2a42c4fb7ea63': {'path': '/data/media/2014/3/WNkSdIrzZBgdjybV.1543636206776.jpg', 'filesize': 2628199}, '0f08db0eeabf9d31e01bcc993e24c4b2': {'path': '/data/media/2014/3/IfwCqXfdDzQoBazA.1543636206776.mp4', 'filesize': 336985136}, '57200a68d54d808fa75b645c877df049': {'path': '/data/media/2014/6/pqGuReZrLofoIXUG.mp4', 'filesize': 193895559}, '43c239002689f97a065b59f17adca03e': {'path': '/data/media/2014/4/XeKlGaWxaBcEPivz.1543636206776.jpg', 'filesize': 1049051}, '870c33dba95aa412070e0f7303e7df00': {'path': '/data/media/2014/8/aouXSlJYWbyMnncT.mp4', 'filesize': 152646958}, '07b3269d421f38c1e36b1546035b2a16': {'path': '/data/media/2014/8/sXPpALnQGwYENbcH.1543636206777.mp4', 'filesize': 163843319}, 'f7ea2b937aeebc6fc7fe550d6eaa8237': {'path': '/data/media/2014/8/SaKwgRGcCzyLjKJS.mp4', 'filesize': 142063621}, 'aeba875a8992ce3a0f7a0683a1b208bd': {'path': '/data/media/2014/8/gAwAGmHsQDlhERKZ.mp4', 'filesize': 290321053}, 'fcee4bf3cac7a4ee0c0d9f13912f4dec': {'path': '/data/media/2014/8/psohUINwgNBbNumI.mp4', 'filesize': 312515367}, '3f87be0b1eba26f8e0ad95de09dd8a12': {'path': '/data/media/2014/5/wXPpwOxFiInraHLx.mp4', 'filesize': 129008816}, 'fa3750d46e63a1678c900bc20034869e': {'path': '/data/media/2014/9/MGoVGKOkIxtZuzHY.jpg', 'filesize': 492073}, '60d19bc7854c821a96b05dc6d69b2088': {'path': '/data/media/2014/9/tIefXamQOCcNktkm.1543636206777.jpg', 'filesize': 566656}, 'ac3c6d63b419a77d135ebbd737885b18': {'path': '/data/media/2014/7/ZfJFOTICzatQBkyD.1543636206777.mp4', 'filesize': 277473442}, '07396bff6ae18dbef1aedb2ed851f271': {'path': '/data/media/2014/7/wRyeJuhkyPIRqlDH.1543636206777.jpg', 'filesize': 233660}, '2bab72e10b92f429b06af45ee6d4141a': {'path': '/data/media/2014/11/HcnNWRdQsCjlfhbq.jpg', 'filesize': 2984438}, '28270cb8f08f79802d75cb8c8b5373a3': {'path': '/data/media/2014/10/tVWsvmZwZjaxidAn.1543636206778.jpg', 'filesize': 1780287}, '498a79ae79d6851bdde4ad45750a9107': {'path': '/data/media/2014/12/TcLykirGUntWzASw.jpg', 'filesize': 3233735}, '26d43d70c7bbd525c5a166efac650d4e': {'path': '/data/media/2014/1/OvdyZhtGatiAiMIJ.mp4', 'filesize': 295711722}, '89316ad7f98a6d90f77b3abcefca722a': {'path': '/data/media/2016/3/wsAOLCXTEKpSKRzo.1543636206778.jpg', 'filesize': 464345}, '2b3144360bbe9c70c3f5bcb728e545a0': {'path': '/data/media/2016/4/PrccPJATWnPMebbr.1543636206779.jpg', 'filesize': 306685}, '328c00157e439f8eaf372a8989535fe3': {'path': '/data/media/2016/8/fFEuHcLQvPfPYFXz.1543636206779.mp4', 'filesize': 176071660}, '20abad87ffa368e442b018640151f2d3': {'path': '/data/media/2016/2/UYZSKtCtIUYMYVAp.mp4', 'filesize': 209874019}, '9aa61260b8e2164ed5e479234719899e': {'path': '/data/media/2016/2/tCJpQPEfAAEHgwLw.mp4', 'filesize': 325151208}, '331d366c2b5ed78122673d0b6376e6f0': {'path': '/data/media/2016/9/ZpjyHFgCUBWxXkNY.mp4', 'filesize': 324533852}, '6395df1097326ff81d18d236d9fb79de': {'path': '/data/media/2016/7/dAPRRDIzWleMctWp.jpg', 'filesize': 801738}, '4dfdc57bdce2572cd2fc22ab757c1a8a': {'path': '/data/media/2016/10/DnCxCNBblDSciPik.1543636206780.jpg', 'filesize': 696217}, '844b69c59318db65f0cda39eff0a707d': {'path': '/data/media/2016/10/UnzyzEYFkgHEFHna.mp4', 'filesize': 265850585}, '8ce28ed0e3cf0441373aff566b9d312b': {'path': '/data/media/2016/10/KluOLoFhtbaQEJsi.mp4', 'filesize': 192865384}, '35141302633039cd680a016f5d082edf': {'path': '/data/media/2016/10/MWHIyeqvbtxlPnBF.1543636206780.mp4', 'filesize': 146216460}, '921b222ca3e465c10470f191fed9d18f': {'path': '/data/media/2016/10/UQuMWpjHyuZoqhee.mp4', 'filesize': 220855810}, '1dd809fd25d94a66f4bdba934448fbcf': {'path': '/data/media/2016/12/QzCehiCjwabnfSLO.1543636206780.jpg', 'filesize': 891968}, '2564755399b04c86aa00988a91b5c2ad': {'path': '/data/media/2016/12/yZFcfngkDashPpGd.jpg', 'filesize': 1743143}, '7145ba0d60b031d47be01ab2053741d1': {'path': '/data/media/2016/1/KDYeyMUlDIDJGEGh.jpg', 'filesize': 2301327}, '042e0f82b76457c5924e150e2a744fdc': {'path': '/data/media/2016/1/MFdidwgFgmOQoznW.jpg', 'filesize': 3108426}, '13059a9ebf6ad4a83f12164f0bd5d975': {'path': '/data/media/2017/3/PgPwQWRcPvysClPi.jpg', 'filesize': 4528645}, 'c416b142317c48aa00d4e40a0ad43a01': {'path': '/data/media/2017/6/KIPgTJIxdczwltTH.mp4', 'filesize': 209459938}, '73d4eeeec44ad0f39ae3de09a05d0909': {'path': '/data/media/2017/6/FKQzbbAPcVwcodII.1543636206781.jpg', 'filesize': 657690}, 'b7c41f21833a6c37d49d85f4cc25da11': {'path': '/data/media/2017/4/CEvxLSFjhNsnmhfF.mp4', 'filesize': 306079976}, '7fd596bc3be56c21b2c097100bda5978': {'path': '/data/media/2017/4/LLoxvCxOdKWuNKQg.1543636206781.mp4', 'filesize': 268750828}, '8480e06f47242e5fe570031f334c53e4': {'path': '/data/media/2017/4/GTqgfkszCupmhytd.jpg', 'filesize': 2599906}, 'f040c9b742091411540f8d1a07cffbef': {'path': '/data/media/2017/8/EuJKsZNVvcmdqcmM.1543636206781.mp4', 'filesize': 299659364}, 'e053c562b4412be84eb526466432c608': {'path': '/data/media/2017/2/gAiSGkPHVNOrFAws.jpg', 'filesize': 2918565}, 'a445b83711101995f35504ba1059c3c6': {'path': '/data/media/2017/5/ZzYhVokBFfQROQev.jpg', 'filesize': 778918}, 'b3feba11813f7ba1a5060b5dada94cdc': {'path': '/data/media/2017/5/xnetOnVDnBVrLYik.1543636206782.mp4', 'filesize': 118840851}, '3c2ca2dc138dcfdfe744b7d176475a44': {'path': '/data/media/2017/9/XAHIofBXDNjcQLjU.1543636206782.mp4', 'filesize': 190380855}, '374db93bfabdf5fc545149bbb15f66eb': {'path': '/data/media/2017/9/nSEFHVgAKXnjfktI.1543636206782.mp4', 'filesize': 126727765}, '80701b4365cda144370e7bb0e811b8e6': {'path': '/data/media/2017/9/hdxewotFfbvEgRFk.1543636206782.mp4', 'filesize': 295091787}, 'f4a6592a156a0c17559597941ba547ba': {'path': '/data/media/2017/9/zcVTRrcczVlmXKAG.mp4', 'filesize': 349834085}, '7b1471fb02661d60b1a005c964ff43ca': {'path': '/data/media/2017/11/qoxwyFQmIHeUzMJM.mp4', 'filesize': 310229878}, 'f482d10d532b43186939f0aadb2e7a4c': {'path': '/data/media/2017/11/RPHObFMulxIpfjaw.jpg', 'filesize': 858820}, '632afb6dd31fe1d3fe7102e05042cf88': {'path': '/data/media/2017/11/gucbrSCCqtPVQVgc.1543636206782.mp4', 'filesize': 132320491}, '7219662fe8075dc193346b04e94b41e8': {'path': '/data/media/2017/11/vzDDulhGlNjeGiqT.jpg', 'filesize': 2030899}, 'd6cd1fec6165b1417546f7756b0e0180': {'path': '/data/media/2017/11/PhhisUvZubbJwZfW.1543636206783.jpg', 'filesize': 559020}, '95ed28af4df56489ea55ad3fcd8c1d68': {'path': '/data/media/2017/10/kiIimUsmwQDMeibn.jpg', 'filesize': 989119}, 'fef70eb2f5111372264335db9bea984c': {'path': '/data/media/2015/3/osAjhooperhNrBQD.jpg', 'filesize': 151319}, '98bae6eecc57af5bd20b240e131bd5a7': {'path': '/data/media/2015/3/sLVXEGAJznvclZkZ.mp4', 'filesize': 144960551}, '91c7aa8b35af54ed49db43a357550e4c': {'path': '/data/media/2015/4/JURMHhvsBovmLhse.jpg', 'filesize': 169863}, '95dc3ea8675a8fc31a3cfa4a99d92fdc': {'path': '/data/media/2015/4/uQHGYjrNnOCUKVWN.1543636206783.mp4', 'filesize': 357716146}, '7c5c97105c33f7d8d5c93cd23081e424': {'path': '/data/media/2015/8/ZbknSLmOWUxoCRTp.jpg', 'filesize': 659395}, '296c9b8148dad506a7133410015f4a33': {'path': '/data/media/2015/8/tXkucTHQELcnbMeu.mp4', 'filesize': 194943429}, '88c7fe5bf72658a872a4aefe9dee8716': {'path': '/data/media/2015/2/qSrMMlYtHGVVTBMm.mp4', 'filesize': 309819158}, 'd22c74306d5c7c92ec5eec40eebbca13': {'path': '/data/media/2015/5/AqnvdcXObmEdSCgD.mp4', 'filesize': 210911268}, '2e351b2301d39e93975ab6bbd64c9b1a': {'path': '/data/media/2015/9/lhtUyhDBIirEvRWK.1543636206784.jpg', 'filesize': 1598771}, 'fcbe47ae1238fa836a271aa22bb92970': {'path': '/data/media/2015/9/lLheIQVVmPmqSSbd.1543636206784.jpg', 'filesize': 3325965}, 'd8205c0658323c8eca7d6595fbd98b2f': {'path': '/data/media/2015/7/UUJVFIgpLFdAnhRD.jpg', 'filesize': 948759}, 'e5752d4c3c5b78875a9e29b63a52579a': {'path': '/data/media/2015/7/wuHKkjLrmNYOyrjF.jpg', 'filesize': 758537}, 'be13717883f6984f7457d34e630310f5': {'path': '/data/media/2015/7/uVomSweGUOGFOgkU.1543636206784.mp4', 'filesize': 198048870}, 'f195fcf235f378578a97f8a9a4b6261d': {'path': '/data/media/2015/11/famYUTQqZqVbRWwq.1543636206785.jpg', 'filesize': 1142256}, '29bd5852628fca5e398fc11ffa24bd5f': {'path': '/data/media/2015/11/ggegKftaryZlDtKJ.mp4', 'filesize': 147041494}, '22be8df5804c1e74a7a8a89143f4ea99': {'path': '/data/media/2015/11/AXpYjuxSmDVkskFF.mp4', 'filesize': 331166674}, '7009960303d33c703eb415f3c9a225bd': {'path': '/data/media/2015/11/ZirQxAOkqwyRKFiA.mp4', 'filesize': 334490513}, 'd810b7461ff0a52dbf8fc7ffa43baeca': {'path': '/data/media/2015/10/GEYOWjnyfbbKKiOD.mp4', 'filesize': 347351142}, '3b2b7fe4fb6f4fe2e917347030366d2d': {'path': '/data/media/2015/1/NHnjbFhdZhYNSjbI.mp4', 'filesize': 119676962}, '3652467031ac5d6139ac993b851ee109': {'path': '/data/media/2015/1/lezfWioMYCKNjpCL.jpg', 'filesize': 2128604}, '041f259753981c792c59fbfdcad49f1e': {'path': '/data/media/2015/1/IhvklilovixIArfK.jpg', 'filesize': 1271938}, '5b64035f0eb85558624fb46dcc6479ab': {'path': '/data/media/2015/1/AVadaKCQdPdSyOgC.jpg', 'filesize': 228923}, '8e78f752f0ac264a842ff93f138394f9': {'path': '/data/media/2018/12/OpGgltUFoskqkVUQ.txt', 'filesize': 252003}, 'a4b04f9d8923ea0981235faf9edb6652': {'path': '/data/media/2018/12/sscftAsRYhHADNnw.1543636206786.txt', 'filesize': 101703}, '682fd598a19db8f837872455798c1795': {'path': '/data/media/2018/12/QClmAnDICRLyjSDT.1543636206787.txt', 'filesize': 18537}, '57dd343f059a6bd42c022abfc0a88dcb': {'path': '/data/media/2018/12/VtmLfRzJaQgAJvfc.1543636206787.txt', 'filesize': 337173}, '2ea87ffcde512320c2a957f5d166cdc2': {'path': '/data/media/2018/12/AulBHhASwLSCeuel.1543636206787.txt', 'filesize': 278055}, '0c30c353d3116756161aa1b7082498ee': {'path': '/data/media/2018/12/IDWdrfizEAUVdflo.1543636206787.txt', 'filesize': 379758}, 'bb4063f51ab237901f5846eb90d94f2b': {'path': '/data/media/2018/12/GhWmpUNsIVVxcUxr.1543636206787.txt', 'filesize': 57114}, '313a5047c5ab02fbe49e54a4c6b886d9': {'path': '/data/media/2018/12/OMYGzqMGMcjdaPYG.txt', 'filesize': 388776}, '47a665134ed982608273811355ab3f3d': {'path': '/data/media/2018/12/rJRRBPIMKYItdPCI.txt', 'filesize': 492984}, 'f4dbb7dfeffd8fe323eaeee9b9c25d98': {'path': '/data/media/2018/12/BdAjhcWjninupecg.txt', 'filesize': 28056}, '1e890185ac1e9772d78f392a6ecaa04c': {'path': '/data/media/2018/12/CQMmjJxzbECFoLyR.1543636206787.txt', 'filesize': 79659}, '794c45ea169f79debf5213ba67bd8564': {'path': '/data/media/2018/12/XjhIKWYgxvxuUHQK.1543636206787.txt', 'filesize': 88677}, '482a8a37420a2b9d18383cd712a4cf5c': {'path': '/data/media/2018/12/KnSHkkFilHQIJENW.txt', 'filesize': 329658}, '4636b963058fd1e93f3b046acde8b003': {'path': '/data/media/2018/12/hUpBwIsyatqzWBfJ.txt', 'filesize': 63627}, 'e282c7c522a0db6f400296592cc82f67': {'path': '/data/media/2018/12/hdKzFPwaVfTeXYFP.txt', 'filesize': 452403}, '3168b11248213556bad9c1f23dc0d5da': {'path': '/data/media/2018/12/NLWgAKOXteNxPGSs.1543636206787.txt', 'filesize': 247995}, '1ecef639873313b02c0f1fa822985385': {'path': '/data/media/2018/12/cqwNyqbPoOlExQeY.1543636206787.txt', 'filesize': 113727}, '01478a14ffacfa59edf6783691314be1': {'path': '/data/media/2018/12/aSaeaQkHfncvbhfJ.txt', 'filesize': 17034}, '2d66ed36149421c2c4e5e65891a6f3ec': {'path': '/data/media/2018/12/kJHkJEkcBSgKstMy.1543636206787.txt', 'filesize': 81663}, 'd47e88e83f6898fd6c23456be6cee91f': {'path': '/data/media/2018/12/QqCYYzsAUZFUZeCF.txt', 'filesize': 465930}, 'ac78af02e8f738a40b98594bbfd74313': {'path': '/data/media/2018/12/wEcJLVHHVuJlFsZL.1543636206788.txt', 'filesize': 153807}, 'f64ffc04cde952301d673a7a59c8641d': {'path': '/data/media/2018/12/WrrRTkZpZmENLGxt.txt', 'filesize': 369738}, '4feff3226f02906df887a6c58f34433b': {'path': '/data/media/2018/12/jjJJGwDmGsYdxMju.1543636206788.txt', 'filesize': 21042}, '5b6bf02fd4451972a619c6bc1c90109d': {'path': '/data/media/2018/12/KVNfGuvYzpWRrtlE.txt', 'filesize': 266031}, '6851cd5c56bc15f35cf4e9a2397b0dd9': {'path': '/data/media/2018/12/oqHKDIFxotxKqTBN.txt', 'filesize': 349698}, '9054bf163c66a774584b808e1666691c': {'path': '/data/media/2018/12/JNQQuEBvgZTDMOlq.txt', 'filesize': 85671}, 'e500e0dcca5ed41087dbf55e7079910c': {'path': '/data/media/2018/12/QccAAxBvNeieBTii.txt', 'filesize': 372243}, 'b0b2da4266bac2d82055fe3b110ec3b2': {'path': '/data/media/2018/12/DLqhaSpkXrTyLqog.txt', 'filesize': 63627}, '21305e1dfbc6390f1d33e065dd0f3f33': {'path': '/data/media/2018/12/biDaOfFlqTgJmqsu.txt', 'filesize': 11523}, '67ca8d6e1e9b8492de9a4cfe62c48b9a': {'path': '/data/media/2018/12/daSufwWeDBUNpuvx.txt', 'filesize': 213426}, '4c43a41b15792966507b550134c9026b': {'path': '/data/media/2018/12/GSVZGmDCrAUAxPTg.1543636206788.txt', 'filesize': 48597}, '8d39766afdf270b99d1b3446fe8aaecf': {'path': '/data/media/2018/12/KpaRXAQsUxdwCAVo.txt', 'filesize': 59118}, '8d8daa614687c2ada8a930d08769f118': {'path': '/data/media/2018/12/vWltEVBGmhdsTpFR.1543636206788.txt', 'filesize': 223947}, 'feeea86c760f96c9e4319fa98e084858': {'path': '/data/media/2018/12/jEqByXYcyhiZYwoa.txt', 'filesize': 422343}, '82da6b00aae794609a8d7f90f40b7466': {'path': '/data/media/2018/12/NphRCuKzvldHovFl.1543636206788.txt', 'filesize': 290079}, 'bdc2ad51b335cb5e515cee8070f1a700': {'path': '/data/media/2018/12/lUUWAIhLWrStYswk.1543636206789.txt', 'filesize': 60120}, '5a2cfce7d3dcfb8ab953399c3cc85dd2': {'path': '/data/media/2018/12/YkNvxiKSVnuACzxd.txt', 'filesize': 182364}, '33dd08aadfc6a3e72a74ced6dc0ef4d9': {'path': '/data/media/2018/12/nNxLIfNqeczSJORJ.txt', 'filesize': 279558}, '4ef3726db6926e9baa538069fa07cea2': {'path': '/data/media/2018/12/SLSCxNoelVyRcYbv.txt', 'filesize': 302604}, '9e8c3f560d7b0093a353116829de6e90': {'path': '/data/media/2018/12/nNvCAuerRDHPKlkw.1543636206789.txt', 'filesize': 232464}, '11ff68223fdebfa8881fc985c22b5713': {'path': '/data/media/2018/12/xHVmHCfrYqEhXTVa.txt', 'filesize': 236973}, 'b12f2c6754eb41d7dd2d46f6ebee40d5': {'path': '/data/media/2018/12/vtsjLsgeyIJLcTsV.txt', 'filesize': 494988}, '48795bcd99d2360d01a4c93163a80186': {'path': '/data/media/2018/12/rxSOrdABtOjVQUTP.1543636206789.txt', 'filesize': 346692}, 'cd7a2077739c6bbab0854a8d345739ad': {'path': '/data/media/2018/12/RuFOrLIzOnITvnUy.txt', 'filesize': 294087}, 'f0d11d7072ecbaa4a4dd6f9f34846b74': {'path': '/data/media/2018/12/mJNiXVgaqyWMgQTl.txt', 'filesize': 371742}, '31d39a529cbe1781fb28f3b791c4b273': {'path': '/data/media/2018/12/sIsBMTgqrmsflNYW.1543636206789.txt', 'filesize': 42084}, 'e6dbfabd1ec40ee1ee489128a72e8f18': {'path': '/data/media/2018/12/RegtKEuQsJULKpRn.txt', 'filesize': 52104}, '56c7a68d4009ade1a5a8665138a0efb6': {'path': '/data/media/2018/12/EYVjlDvgoQCMbLos.1543636206789.txt', 'filesize': 263526}, '33c87b8c116b48b12220c6dcf474947e': {'path': '/data/media/2018/12/MXGyVnatVqgLtWbm.1543636206789.txt', 'filesize': 176352}, '6d969f273caa24ab8899d25a4efec59e': {'path': '/data/media/2018/12/AbaDaUCBKAZxFSeQ.txt', 'filesize': 396291}, '29a44e4320cf99332c1ed2c70eac7f5a': {'path': '/data/media/2018/12/IoiBgDrDOTNhgFjg.1543636206790.txt', 'filesize': 30561}, '93e3cdcea71b535b61fa158c41b6f911': {'path': '/data/media/2018/12/cFEeMdRrzoMerUQO.1543636206790.txt', 'filesize': 265029}, 'a5f3eddad81e93e26f131715b1446083': {'path': '/data/media/2018/12/PyZwRsCkvXtylQGw.txt', 'filesize': 170841}, 'cee1ab9177359e2314597a9843d7e7ac': {'path': '/data/media/2018/12/qwOeurJbtNCMsJxb.1543636206791.txt', 'filesize': 487473}, '824712c56515fdae7f67d4a7dfc19186': {'path': '/data/media/2012/3/qEXNjZxlBPUPMRui.jpg', 'filesize': 1337583}, '434cc92e8b9785f22629a4bc80b99cc6': {'path': '/data/media/2012/3/WSVVvxyNHwPySPxA.jpg', 'filesize': 2665525}, 'b628c8c477256632a33bc843f197ab60': {'path': '/data/media/2012/3/oaUuhXdQIaRmjaVc.1543636206792.jpg', 'filesize': 4489891}, '5b94b62d113fd87695ec1167bab5a5ae': {'path': '/data/media/2012/4/imoHKXlwruOHeNhJ.mp4', 'filesize': 124647575}, 'c89e217a6e7f49a881a84a2b7f12b57f': {'path': '/data/media/2012/4/xPRVNoXJwasFOtfI.jpg', 'filesize': 827826}, '6aceb24a308cd5c55553601d4337bc0c': {'path': '/data/media/2012/4/WHolRETyDgYFNbNl.jpg', 'filesize': 943004}, 'c6ac15aa61b43fa97a871b1be62661b1': {'path': '/data/media/2012/4/IECiBGEjYKcaDTfd.mp4', 'filesize': 283070897}, '39a1f51d93e3a32d2ceab206f7b9f294': {'path': '/data/media/2012/8/PVlUWFVTEiQptgjd.jpg', 'filesize': 441032}, '51b0eb79a2ef5a425384afced6f87e2a': {'path': '/data/media/2012/5/tCAwVfQFwblbIgKM.1543636206792.jpg', 'filesize': 3135178}, 'e7124256b6e393896469f8eeca4e01d6': {'path': '/data/media/2012/11/xNUeChnPjQTyimJx.jpg', 'filesize': 820378}, '4179ec6f2ca13968ae4b3c8341b9fae0': {'path': '/data/media/2012/10/VFPBfRkWyPZcNgIg.mp4', 'filesize': 128592902}, '893de97737bf95f5e752f908d2cb00b9': {'path': '/data/media/2012/10/eOEdyRdczueiIWTD.1543636206793.jpg', 'filesize': 1310232}, 'du': 22894369848}
+12/01/2018 04:57:15 PM PST - Running Crawl init
+12/01/2018 04:57:15 PM PST - {'du': 0}
+12/01/2018 04:58:59 PM PST - Running Crawl init
+12/01/2018 04:58:59 PM PST - Running Crawl init
+12/01/2018 04:58:59 PM PST - The Index matches the Directory
+12/01/2018 04:58:59 PM PST - Running Crawl init

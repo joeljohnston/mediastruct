@@ -5,6 +5,9 @@ import shutil
 import logging
 from glob import glob
 
+log = logging.getLogger(__name__)
+log.info('Launching the Crawl Class')
+
 class ingest(object):
 
     def __init__(self,_sourcedir,_destdir):
@@ -12,7 +15,7 @@ class ingest(object):
         ingest.mvrnm(self,_sourcedir,_destdir)
 
     def mvrnm(self,sourcedir,destdir):
-        log.info("Dirctory root: {}".format(sourcedir))
+        log.info("Dirctory root: %s" % (sourcedir))
         if os.path.isdir(sourcedir):
             os.chdir(sourcedir)
             for folder, subs, files in os.walk(sourcedir):
