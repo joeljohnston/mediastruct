@@ -1,3 +1,4 @@
 dicttools
 pillow
 configparser
+xxhash

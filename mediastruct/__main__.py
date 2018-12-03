@@ -1,6 +1,7 @@
 import os
 import sys
 import configparser
+import glob
 import io
 import logging
 import logging.config
@@ -13,7 +14,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 ##############################################################
 import ingest
 import crawl
-#import dedupe
+import dedupe
 #import sort
 #import archive
 #import validate
@@ -80,13 +81,20 @@ def _launch():
         ingestsum = crawl.crawl(ingestdir,jsondatadir)
         workingdirsum = crawl.crawl(workingdir,jsondatadir)
         archivedirsum = crawl.crawl(archivedir,jsondatadir)
-        #duplicatedirsum = crawl(duplicatedir,jsondatadir)
+        #duplicatedirsum = crawl.crawl(duplicatedir,jsondatadir)
 
     if sys.argv[1] == 'ingest':
-        a = ingest.ingest(ingestdir,workingdirs)
+        a = ingest.ingest(ingestdir,workingdir)
 
     if sys.argv[1] == 'dedupe':
-        dedupe()
+        data_files = glob.glob(jsondatadir + '/*.json')
+        dedupe.dedupe(data_files,duplicatedir)
+        ingestsum = crawl.crawl(ingestdir,jsondatadir)
+        workingdirsum = crawl.crawl(workingdir,jsondatadir)
+        archivedirsum = crawl.crawl(archivedir,jsondatadir)
+        #duplicatedirsum = crawl.crawl(duplicatedir,jsondatadir)
+
+
 
     if sys.argv[1] == 'sort':
         sort()

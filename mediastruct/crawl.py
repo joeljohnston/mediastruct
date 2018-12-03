@@ -4,10 +4,11 @@ import re
 from os import walk, remove, stat
 from os.path import join as joinpath
 import logging
-import hashlib
+import xxhash 
 import shutil
 import json
 import glob
+import uuid
 
 log = logging.getLogger(__name__)
 log.info('Launching the Crawl Class')
@@ -25,7 +26,7 @@ class crawl:
                     array = json.load(f)
                     if array['du']:
                         currentdu = crawl.getFolderSize(self, rootdir)
-                        if currentdu != array['du']:
+                        if currentdu != array['du'] or array['du'] == 0:
                             index = crawl.index_sum(self, rootdir, datadir)
                         else:
                             log.info("The Index matches the Directory")
@@ -39,11 +40,12 @@ class crawl:
         for path, dirs, files in walk(rootdir):
             for filename in files:
                 index_line = {}
+                fileid = str(uuid.uuid1())
                 filepath = joinpath( path, filename )
                 filesize = stat( filepath ).st_size
-                filehash = hashlib.md5(open(filepath,'rb').read()).hexdigest()
-                index_line.update([ ('path',filepath) , ('filesize',filesize) ])
-                sum_dict[filehash] = index_line
+                filehash = xxhash.xxh64(open(filepath,'rb').read()).hexdigest()
+                index_line.update([ ('filehash',filehash) , ('path',filepath) , ('filesize',filesize) ])
+                sum_dict[fileid] = index_line
         sum_dict['du'] = crawl.getFolderSize(self, rootdir)
         log.info(sum_dict)
         indexfilepath = ('%s/%s_index.json' % (datadir, dirname[2]))
