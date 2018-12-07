@@ -4,11 +4,12 @@ import re
 from os import walk, remove, stat
 from os.path import join as joinpath
 import logging
-import xxhash 
+import xxhash
 import shutil
 import json
 import glob
 import uuid
+from mediastruct.utils import *
 
 log = logging.getLogger(__name__)
 log.info('Launching the Crawl Class')
@@ -25,7 +26,7 @@ class crawl:
                 with open('%s/%s_index.json' % (datadir, dirname[2]), 'r') as f:
                     array = json.load(f)
                     if array['du']:
-                        currentdu = crawl.getFolderSize(self, rootdir)
+                        currentdu = utils.getFolderSize(self, rootdir)
                         if currentdu != array['du'] or array['du'] == 0:
                             index = crawl.index_sum(self, rootdir, datadir)
                         else:
@@ -46,7 +47,7 @@ class crawl:
                 filehash = xxhash.xxh64(open(filepath,'rb').read()).hexdigest()
                 index_line.update([ ('filehash',filehash) , ('path',filepath) , ('filesize',filesize) ])
                 sum_dict[fileid] = index_line
-        sum_dict['du'] = crawl.getFolderSize(self, rootdir)
+        sum_dict['du'] = utils.getFolderSize(self, rootdir)
         log.info(sum_dict)
         indexfilepath = ('%s/%s_index.json' % (datadir, dirname[2]))
         indexfile = open(indexfilepath,"w")
@@ -54,11 +55,3 @@ class crawl:
         indexfile.write(jsonoutput)
         indexfile.close()
         return sum_dict
-
-    def getFolderSize(self,start_path = '.'):
-        total_size = 0
-        for dirpath, dirnames, filenames in os.walk(start_path):
-            for f in filenames:
-                fp = os.path.join(dirpath, f)
-                total_size += os.path.getsize(fp)
-        return total_size

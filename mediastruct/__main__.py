@@ -6,7 +6,7 @@ import io
 import logging
 import logging.config
 
-#add path
+#add path of package
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 ##############################################################
@@ -15,8 +15,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import ingest
 import crawl
 import dedupe
-#import sort
-#import archive
+import archive
+import utils
 #import validate
 
 #############################################################
@@ -32,6 +32,7 @@ config_path = app_path + 'conf/'
 # Config files - create with defaults if they don't exist
 #############################################################
 configfile_name = "conf/config.ini"
+#create a template if the config.ini doesn't exist
 if not os.path.isfile(configfile_name):
     cfgfile = open(configfile_name, 'w')
 
@@ -50,7 +51,6 @@ if not os.path.isfile(configfile_name):
     appConfig.add_section('datadir')
     appConfig.set('datadir','jsondatadir','data')
     appConfig.set('datadir','logdir','logs')
-
     appConfig.write(cfgfile)
     cfgfile.close()
 else:
@@ -77,30 +77,31 @@ console.setFormatter(formatter)
 logging.getLogger('').addHandler(console)
 
 def _launch():
+    #the crawl function performs a hash index of all files in the target directories
     if sys.argv[1] == 'crawl':
         ingestsum = crawl.crawl(ingestdir,jsondatadir)
         workingdirsum = crawl.crawl(workingdir,jsondatadir)
         archivedirsum = crawl.crawl(archivedir,jsondatadir)
         #duplicatedirsum = crawl.crawl(duplicatedir,jsondatadir)
 
+    #the ingest function sorts and moves files by date into the working/media directory
     if sys.argv[1] == 'ingest':
         a = ingest.ingest(ingestdir,workingdir)
-
+    
+    #the dedupe function combines all hash indexes and analyzes the dataset for duplicates
     if sys.argv[1] == 'dedupe':
         data_files = glob.glob(jsondatadir + '/*.json')
+        #run the dedupe function
         dedupe.dedupe(data_files,duplicatedir)
+        #after the dedupe function has moved duplicaes out, reindex
         ingestsum = crawl.crawl(ingestdir,jsondatadir)
         workingdirsum = crawl.crawl(workingdir,jsondatadir)
         archivedirsum = crawl.crawl(archivedir,jsondatadir)
         #duplicatedirsum = crawl.crawl(duplicatedir,jsondatadir)
 
-
-
-    if sys.argv[1] == 'sort':
-        sort()
-
+    #the archive function pulls from the working/media directory and pools into sized volumes
     if sys.argv[1] == 'archive':
-        archive()
+        archive.archive(archivedir,jsondatadir, workingdir,mediasize)
 
     if sys.argv[1] == 'validate':
         validate()
@@ -108,6 +109,6 @@ def _launch():
     if sys.argv[1] == '':
         print("You gotta gimme something here")
 
-
+#launch on init
 if __name__ == '__main__':
     _launch()

@@ -1,4 +1,8 @@
 # mediastruct
+WARNING: This software is EXPERIMENTAL!!!!! Use at your own risk.  Even though the application doesn't delete files, I'm not responsible for any data loss or data structure loss that you may incur while working with this software. Anything you do is on you. 
+
+I highly recommend using this project's sister project (Mediagen) to create a bogus dataset to work with, so that you can understand how this software works.  
+
 MediaStruct is a comprehensive suite of tools used for managing a media archive. 
 
 My Use Case:
@@ -22,12 +26,7 @@ DeDupe
 1. loads the master index file (that includes paths and file hashes)
 2. compares hashes and finds duplicates
 3. creates a list of duplicates
-
-Sort
-1. takes arguments suggesting which directory tree is considered "master" (and should not be modified)
-2. takes arguments for where to move duplicate files (never deletes anything)
-3. takes list of duplicates
-4. moves duplicate files out of non-master directory structures into the specified target directory (avoiding name collisions)
+4. Moves the duplicates into the duplicates directory
 
 Archive
 1. Creates Archive target directory and calculates the target size of contents based on index file sources
