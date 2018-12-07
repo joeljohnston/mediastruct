@@ -18,15 +18,16 @@ class crawl:
     """Iterate a dir tree and build a sum index"""
     def __init__(self, rootdir, datadir):
         dirname = re.split(r"\/", rootdir)
-        print("project: ",dirname[2])
         print("rootdir: ",rootdir)
         log.info("Running Crawl init")
         if os.path.isdir(rootdir):
             if os.path.isfile('%s/%s_index.json' % (datadir, dirname[2])):
                 with open('%s/%s_index.json' % (datadir, dirname[2]), 'r') as f:
                     array = json.load(f)
+                    print(array)
                     if array['du']:
                         currentdu = utils.getFolderSize(self, rootdir)
+                        print("currentdu: ", currentdu)
                         if currentdu != array['du'] or array['du'] == 0:
                             index = crawl.index_sum(self, rootdir, datadir)
                         else:

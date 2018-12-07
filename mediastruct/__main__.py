@@ -17,7 +17,7 @@ import crawl
 import dedupe
 import archive
 import utils
-#import validate
+import validate
 
 #############################################################
 # Setup Paths
@@ -48,6 +48,8 @@ if not os.path.isfile(configfile_name):
     appConfig.set('archivemedia','burnedtag','wr')
     appConfig.add_section('duplicates')
     appConfig.set('duplicates','duplicatedir','/data/duplicates')
+    appConfig.add_section('validated')
+    appConfig.set('validated','validateddir','/validated')
     appConfig.add_section('datadir')
     appConfig.set('datadir','jsondatadir','data')
     appConfig.set('datadir','logdir','logs')
@@ -62,6 +64,7 @@ else:
     mediasize = config['archivemedia']['mediasize']
     burnedtag = config['archivemedia']['burnedtag']
     duplicatedir = config['duplicates']['duplicatedir']
+    validateddir = config['validated']['validateddir']
     jsondatadir = config['datadir']['jsondatadir']
     logdir = config['datadir']['logdir']
 
@@ -104,7 +107,7 @@ def _launch():
         archive.archive(archivedir,jsondatadir, workingdir,mediasize)
 
     if sys.argv[1] == 'validate':
-        validate()
+        validate.validate(duplicatedir,workingdir,archivedir,validateddir)
 
     if sys.argv[1] == '':
         print("You gotta gimme something here")
