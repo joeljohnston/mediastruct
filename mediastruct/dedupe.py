@@ -48,7 +48,7 @@ class dedupe:
                 if d != 'du' and e != 'du':
                     #as we loop through match hashes that don't have identical path/name
                     if array[d]['filehash'] == array[e]['filehash'] and array[d]['path'] != array[e]['path']:
-                        log.info("e: %s - %s - %s -  %s" % ( array[e]['filehash'],array[d]['path'],array[e]['path'], array[e]['filesize']))
+                        log.info("Duplicate: %s - %s - %s -  %s" % ( array[e]['filehash'],array[d]['path'],array[e]['path'], array[e]['filesize']))
                         index_line.update([ ('filehash',array[e]['filehash']) , ('path',array[e]['path']) , ('filesize',array[e]['filesize']) ])
                         #the vars say delete, but we're not deleting anything don't worry
                         #this is the only way my brain could figure out how to take only the first matching record, open to better ideas 
@@ -61,6 +61,7 @@ class dedupe:
         #loop through the "to be deleted" files and move them to the duplicates directory
         for key in to_delete:
             if os.path.isfile(array[key]['path']):
+                log.info("Moving Duplicate %s to %s" % (array[key]['path'],duplicated_dir))
                 shutil.move(array[key]['path'],duplicates_dir + '/')
             del array[key]
 

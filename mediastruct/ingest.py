@@ -24,11 +24,10 @@ class ingest(object):
         #ensure the source directory exists
         if os.path.isdir(sourcedir):
             #change parser to the sourcedir
-            os.chdir(sourcedir)
+            #os.chdir(sourcedir)
             #loop through contents of the ingest directory
             for folder, subs, files in os.walk(sourcedir):
                 for filename in files:
-                    log.info("filename: %s" % (filename))
                     #split the filename up
                     ext = os.path.splitext(filename)[1][1:]
                     newfile = os.path.splitext(filename)[0]
@@ -43,11 +42,11 @@ class ingest(object):
                     ctime_dir = "%s/%s" % (str(ftime.tm_year), str(ftime.tm_mon))
                     dest_dir="%s/%s" % (destdir, ctime_dir)
                     dest="%s/%s/%s" % (destdir, ctime_dir, filename)
-                    log.info("Destination Path: %s" % (dest))
                     newdest= "%s/%s" % (dest_dir, newfilename)
                     if not os.path.exists(dest_dir):
                         os.makedirs(dest_dir)
                     if not os.path.exists(dest):
+                        log.info('Moving %s from %s to %s' % (ext,filename,dest))
                         shutil.move(filepath, dest)
                     else:
                         shutil.move(filepath, newdest)

@@ -5,6 +5,7 @@ import glob
 import io
 import logging
 import logging.config
+import argparse
 
 #add path of package
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -18,15 +19,6 @@ import dedupe
 import archive
 import utils
 import validate
-
-#############################################################
-# Setup Paths
-#############################################################
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-this_path = os.path.dirname(os.path.realpath(__file__))
-one_up = os.path.dirname(os.path.realpath(__file__)) + '/../'
-app_path = os.path.join(this_path, one_up)
-config_path = app_path + 'conf/'
 
 #############################################################
 # Config files - create with defaults if they don't exist
@@ -68,6 +60,15 @@ else:
     jsondatadir = config['datadir']['jsondatadir']
     logdir = config['datadir']['logdir']
 
+#############################################################
+# Setup Paths
+#############################################################
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+this_path = os.path.dirname(os.path.realpath(__file__))
+one_up = os.path.dirname(os.path.realpath(__file__)) + '/../'
+app_path = os.path.join(this_path, one_up)
+config_path = app_path + 'conf/'
+
 ##############################################################
 # Logging
 ##############################################################
@@ -77,41 +78,97 @@ console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
 console.setFormatter(formatter)
-logging.getLogger('').addHandler(console)
 
-def _launch():
-    #the crawl function performs a hash index of all files in the target directories
-    if sys.argv[1] == 'crawl':
-        ingestsum = crawl.crawl(ingestdir,jsondatadir)
-        workingdirsum = crawl.crawl(workingdir,jsondatadir)
-        archivedirsum = crawl.crawl(archivedir,jsondatadir)
-        #duplicatedirsum = crawl.crawl(duplicatedir,jsondatadir)
+class mediastruct_init(object):
+    def __init__(self):
+        
+        log = logging.getLogger(__name__)
 
-    #the ingest function sorts and moves files by date into the working/media directory
-    if sys.argv[1] == 'ingest':
+        log.info("########################## Starting Medistruct ##########################")
+        #arparse init
+        parser = argparse.ArgumentParser(description='Manage media file structure for archiving.',usage='''mediastruct <command> [<args>]
+        Commands:
+        ingest -  Moves files from the ingest directory set in conf/config.ini to the working directory set in conf/config.ini in a date structure
+
+        crawl -   Iterates through all configured directories (except duplicates) and creates a hash index json file in data/
+
+        dedupe -  Combines all configured directory's json datasets and moves duplicates in the working directory or ingest into the duplicates directory
+
+        archive - Uses the mediasize variable set in conf/config.ini to create sized volumes in the archive directory and moves files accordingly
+
+        validate - Does the reverse of the above actions by rehashing and comparing each marked duplicate file to all files in all structures, moves matches to the validated directory
+
+        daily -   Combines the above functions into a re-usable automated workflow for use with scheduled jobs
+        ''')
+        parser.add_argument('command', help='Subcommand to run')
+        args = parser.parse_args(sys.argv[1:2])
+        if not hasattr(self, args.command):
+            print('Unrecognized command')
+            parser.print_help()
+            exit(1)
+        #Assess Command Argument
+        log.info("Command: %s" % (args.command))
+        getattr(self, args.command)()
+
+
+    def crawl(self):
+        print("Crawling")
+        #the crawl function performs a hash index of all files in the target directories
+        parser = argparse.ArgumentParser(description='Crawl the dirs and create a hash index')
+        parser.add_argument('-f','--force',action='store_true',default=False,help='forces indexing of all directories')
+        args = parser.parse_args(sys.argv[2:])
+        ingestsum = crawl.crawl(args.force,ingestdir,jsondatadir)
+        workingdirsum = crawl.crawl(args.force,workingdir,jsondatadir)
+        archivedirsum = crawl.crawl(args.force,archivedir,jsondatadir)
+
+    def ingest(self):
+        print("Ingesting Files")
+        #the ingest function sorts and moves files by date into the working/media directory
         a = ingest.ingest(ingestdir,workingdir)
-    
-    #the dedupe function combines all hash indexes and analyzes the dataset for duplicates
-    if sys.argv[1] == 'dedupe':
+       
+    def dedupe(self):
+        print("Dedupping")
+        #the dedupe function combines all hash indexes and analyzes the dataset for duplicates
         data_files = glob.glob(jsondatadir + '/*.json')
         #run the dedupe function
         dedupe.dedupe(data_files,duplicatedir)
-        #after the dedupe function has moved duplicaes out, reindex
-        ingestsum = crawl.crawl(ingestdir,jsondatadir)
-        workingdirsum = crawl.crawl(workingdir,jsondatadir)
-        archivedirsum = crawl.crawl(archivedir,jsondatadir)
-        #duplicatedirsum = crawl.crawl(duplicatedir,jsondatadir)
 
-    #the archive function pulls from the working/media directory and pools into sized volumes
-    if sys.argv[1] == 'archive':
+    def archive(self):
+        print("Archiving")
+        #the archive function pulls from the working/media directory and pools into sized volumes
         archive.archive(archivedir,jsondatadir, workingdir,mediasize)
 
-    if sys.argv[1] == 'validate':
+    def validate(self):
+        print("Validating - This can take awhile")
         validate.validate(duplicatedir,workingdir,archivedir,validateddir)
 
-    if sys.argv[1] == '':
-        print("You gotta gimme something here")
+    def daily(self):
+        print("Running Daily Job")
+        #the crawl function performs a hash index of all files in the target directories
+        ingestsum = crawl.crawl(True,ingestdir,jsondatadir)
+        workingdirsum = crawl.crawl(True,workingdir,jsondatadir)
+        archivedirsum = crawl.crawl(False,archivedir,jsondatadir)
+
+        #the ingest function sorts and moves files by date into the working/media directory
+        ingest.ingest(ingestdir,workingdir)
+       
+        #the dedupe function combines all hash indexes and analyzes the dataset for duplicates
+        data_files = glob.glob(jsondatadir + '/*.json')
+
+        #run the dedupe function
+        dedupe.dedupe(data_files,duplicatedir)
+
+        #after the dedupe function has moved duplicaes out, reindex
+        workingdirsum = crawl.crawl(True,workingdir,jsondatadir)
+
+        #the archive function pulls from the working/media directory and pools into sized volumes
+        archive.archive(archivedir,jsondatadir, workingdir,mediasize)
+        
+        #validate that all files in duplicates exist elsewhere before moving to validated
+        validate.validate(duplicatedir,workingdir,archivedir,validateddir)
+
+        print("Daily Job Completed Successfully")
 
 #launch on init
 if __name__ == '__main__':
-    _launch()
+    mediastruct_init()

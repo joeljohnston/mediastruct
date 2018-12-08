@@ -25,7 +25,6 @@ class validate:
         compare = validate.find_matches(self,duplicates,vali_media,vali_archive,validated_dir)
 
     def iter_duplicates(self, duplicates_dir):
-        print("yeah that's right")
         tobevalidated = [] 
         if os.path.isdir(duplicates_dir):
             for path, dirs, files in walk(duplicates_dir):
@@ -78,4 +77,3 @@ class validate:
 
             if matched == 1:
                 shutil.move(duplicates[dup][0]['path'], validated_dir)
-

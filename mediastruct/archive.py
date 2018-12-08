@@ -35,8 +35,9 @@ class archive:
     def assembleVolume(self,archive_dir,data_dir,media_dir,mediasize,next_volume):
         '''loop thru the contents of the working directory and build a recordset for files to be moved'''
         dirname = re.split(r"\/", media_dir)
+        #convert bytes to GB
         mediasize = int(mediasize) * 1000 * 1000 * 1000
-        print("Target Volume Size: ", mediasize)
+        log.info("Target Volume Size: %s" %  (mediasize))
         archivefiles = [] 
         array = {}
         mediatotal = 0
@@ -49,7 +50,6 @@ class archive:
                         if g != 'du':
                             thisfilesize = array[g]['filesize']
                             mediatotal = thisfilesize + int(mediatotal)
-                            print("Total: ", mediatotal)
                             if mediatotal <= mediasize:
                                 log.info("Adding %s to Archive" % (array[g]['path']))
                                 #adding file to the dictionary used to move files
@@ -63,18 +63,15 @@ class archive:
 
     def archive_files(self, files_to_archive,next_volume,archive_dir):
         arraylen = len(files_to_archive)
-        print("files_to_archive: ", files_to_archive)
-        print("arraylen: ", arraylen)
         for h in range(arraylen):
             #get year
             fullpath = re.split(r"\/",files_to_archive[h][0]['path'])
-            print(fullpath)
             year = fullpath[3]
-            print(year)
             dest_dir = archive_dir + '/' + str(files_to_archive[h][0]['volume']) + '/' + year + '/' + fullpath[4]
             dest_path = archive_dir + '/' + str(files_to_archive[h][0]['volume']) + '/' + year + '/' + fullpath[4] + '/' + fullpath[5]
             if not os.path.isdir(dest_dir):
                 utils.mkdir_p(self, dest_dir)
-            print("destination path: ", dest_path)
+            from_path =  files_to_archive[h][0]['path']
+            log.info("Archiving %s to %s" % (from_path, dest_path))
             shutil.move(files_to_archive[h][0]['path'], dest_path)
 
