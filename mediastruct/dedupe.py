@@ -19,6 +19,7 @@ class dedupe:
 
     #class init
     def __init__(self, data_files,duplicates_dir):
+        log.info("Deduping")
         combined_dataset = dedupe.combine_array(self, data_files)
         dedupe.dups(self,combined_dataset,duplicates_dir)
     

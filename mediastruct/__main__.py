@@ -144,16 +144,15 @@ class mediastruct_init(object):
         print("Validating - This can take awhile")
         validate.validate(duplicatedir,workingdir,archivedir,validateddir)
 
-    def daily(self):
-        print("Running Daily Job")
+    def test(self):
+        print("Running Full Test Sequence")
+        #the ingest function sorts and moves files by date into the working/media directory
+        ingest.ingest(ingestdir,workingdir)
+
         #the crawl function performs a hash index of all files in the target directories
-        ingestsum = crawl.crawl(True,ingestdir,jsondatadir)
         workingdirsum = crawl.crawl(True,workingdir,jsondatadir)
         archivedirsum = crawl.crawl(False,archivedir,jsondatadir)
 
-        #the ingest function sorts and moves files by date into the working/media directory
-        ingest.ingest(ingestdir,workingdir)
-       
         #the dedupe function combines all hash indexes and analyzes the dataset for duplicates
         data_files = glob.glob(jsondatadir + '/*.json')
         #run the dedupe function
@@ -169,6 +168,29 @@ class mediastruct_init(object):
         validate.validate(duplicatedir,workingdir,archivedir,validateddir)
 
         print("Daily Job Completed Successfully")
+
+    def daily(self):
+        print("Running Daily Job")
+        #the ingest function sorts and moves files by date into the working/media directory
+        ingest.ingest(ingestdir,workingdir)
+
+        #the crawl function performs a hash index of all files in the target directories
+        workingdirsum = crawl.crawl(True,workingdir,jsondatadir)
+        archivedirsum = crawl.crawl(False,archivedir,jsondatadir)
+
+        #the dedupe function combines all hash indexes and analyzes the dataset for duplicates
+        data_files = glob.glob(jsondatadir + '/*.json')
+        #run the dedupe function
+        dedupe.dedupe(data_files,duplicatedir)
+
+        #after the dedupe function has moved duplicaes out, reindex
+        #workingdirsum = crawl.crawl(True,workingdir,jsondatadir)
+
+        #the archive function pulls from the working/media directory and pools into sized volumes
+        #archive.archive(archivedir,jsondatadir, workingdir,mediasize)
+        
+        #validate that all files in duplicates exist elsewhere before moving to validated
+        #validate.validate(duplicatedir,workingdir,archivedir,validateddir)
 
 #launch on init
 if __name__ == '__main__':
