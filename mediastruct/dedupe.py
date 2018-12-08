@@ -61,7 +61,7 @@ class dedupe:
         #loop through the "to be deleted" files and move them to the duplicates directory
         for key in to_delete:
             if os.path.isfile(array[key]['path']):
-                log.info("Moving Duplicate %s to %s" % (array[key]['path'],duplicated_dir))
+                log.info("Moving Duplicate %s to %s" % (array[key]['path'],duplicates_dir))
                 shutil.move(array[key]['path'],duplicates_dir + '/')
             del array[key]
 

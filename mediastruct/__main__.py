@@ -73,6 +73,8 @@ config_path = app_path + 'conf/'
 # Logging
 ##############################################################
 log_path = logdir + '/mediastruct.log' 
+if not os.path.isfile(log_path):
+    logfile = open(log_path,'w')
 logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p %Z -')
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
@@ -154,7 +156,6 @@ class mediastruct_init(object):
        
         #the dedupe function combines all hash indexes and analyzes the dataset for duplicates
         data_files = glob.glob(jsondatadir + '/*.json')
-
         #run the dedupe function
         dedupe.dedupe(data_files,duplicatedir)
 
