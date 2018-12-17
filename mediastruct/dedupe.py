@@ -22,13 +22,14 @@ class dedupe:
         log.info("Deduping")
         combined_dataset = dedupe.combine_array(self, data_files)
         dedupe.dups(self,combined_dataset,duplicates_dir)
-    
+
     #put the various datasets together
     def combine_array(self, data_files):
         combined_array = {}
         for i in data_files:
             if os.path.isfile(i):
                 with open( i , 'r') as f:
+                    print("Loading :", i)
                     array = json.load(f)
                     combined_array = {**combined_array, **array}
         return combined_array
@@ -39,6 +40,8 @@ class dedupe:
         key_values = {}
         to_delete = {}
         #loop thru combined dataset
+        arraylen = len(array)
+        print('array_len:', arraylen)
         for d in array:
             #loop through each item in the combined dataset, searching for identical hashes
             for e in array:
@@ -49,6 +52,9 @@ class dedupe:
                 if d != 'du' and e != 'du':
                     #as we loop through match hashes that don't have identical path/name
                     if array[d]['filehash'] == array[e]['filehash'] and array[d]['path'] != array[e]['path']:
+                        print("fileid: ", d)
+                        print("filehash: ", array[d]['filehash'])
+                        print("filehash: ", array[e]['filehash'])
                         log.info("Duplicate: %s - %s - %s -  %s" % ( array[e]['filehash'],array[d]['path'],array[e]['path'], array[e]['filesize']))
                         index_line.update([ ('filehash',array[e]['filehash']) , ('path',array[e]['path']) , ('filesize',array[e]['filesize']) ])
                         #the vars say delete, but we're not deleting anything don't worry

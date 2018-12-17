@@ -27,7 +27,6 @@ configfile_name = "conf/config.ini"
 #create a template if the config.ini doesn't exist
 if not os.path.isfile(configfile_name):
     cfgfile = open(configfile_name, 'w')
-
     appConfig = configparser.ConfigParser()
     appConfig.add_section('ingestdirs')
     appConfig.set('ingestdirs','ingestdir','/data/ingest')
@@ -72,7 +71,7 @@ config_path = app_path + 'conf/'
 ##############################################################
 # Logging
 ##############################################################
-log_path = logdir + '/mediastruct.log' 
+log_path = logdir + '/mediastruct.log'
 if not os.path.isfile(log_path):
     logfile = open(log_path,'w')
 logging.basicConfig(filename=log_path, level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p %Z -')
@@ -83,7 +82,6 @@ console.setFormatter(formatter)
 
 class mediastruct_init(object):
     def __init__(self):
-        
         log = logging.getLogger(__name__)
 
         log.info("########################## Starting Medistruct ##########################")
@@ -118,16 +116,21 @@ class mediastruct_init(object):
         #the crawl function performs a hash index of all files in the target directories
         parser = argparse.ArgumentParser(description='Crawl the dirs and create a hash index')
         parser.add_argument('-f','--force',action='store_true',default=False,help='forces indexing of all directories')
+        parser.add_argument('-p','--path',help='pass a directory to crawl')
         args = parser.parse_args(sys.argv[2:])
-        ingestsum = crawl.crawl(args.force,ingestdir,jsondatadir)
-        workingdirsum = crawl.crawl(args.force,workingdir,jsondatadir)
-        archivedirsum = crawl.crawl(args.force,archivedir,jsondatadir)
+        #Crawl a provided directory
+        if args.path:
+            crawl.crawl(args.force,args.path,jsondatadir)
+        else:
+            ingestsum = crawl.crawl(args.force,ingestdir,jsondatadir)
+            workingdirsum = crawl.crawl(args.force,workingdir,jsondatadir)
+            archivedirsum = crawl.crawl(args.force,archivedir,jsondatadir)
 
     def ingest(self):
         print("Ingesting Files")
         #the ingest function sorts and moves files by date into the working/media directory
         a = ingest.ingest(ingestdir,workingdir)
-       
+
     def dedupe(self):
         print("Dedupping")
         #the dedupe function combines all hash indexes and analyzes the dataset for duplicates
@@ -163,7 +166,7 @@ class mediastruct_init(object):
 
         #the archive function pulls from the working/media directory and pools into sized volumes
         archive.archive(archivedir,jsondatadir, workingdir,mediasize)
-        
+
         #validate that all files in duplicates exist elsewhere before moving to validated
         validate.validate(duplicatedir,workingdir,archivedir,validateddir)
 
