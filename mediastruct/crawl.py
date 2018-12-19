@@ -65,12 +65,12 @@ class crawl:
                     filehash = xxhash.xxh64(open(filepath,'rb').read()).hexdigest()
                     if filehash != '':
                         index_line.update([('filehash',filehash),('path',filepath),('filesize',filesize)])
+                        sum_dict[fileid] = index_line
                 except:
                     print("broken file: ", filepath)
                     log.info("broken file: %s" %  (filepath))
                     time.sleep(120)
                 #we're creating a key-based dictionary here
-                sum_dict[fileid] = index_line
         sum_dict['du'] = utils.getFolderSize(self,rootdir)
         indexfilepath = ('%s/%s_index.json' % (datadir, dirname[dirname_len]))
         indexfile = open(indexfilepath,"w")
