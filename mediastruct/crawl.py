@@ -63,7 +63,8 @@ class crawl:
                 print("filepath: ", filepath)
                 try:
                     filehash = xxhash.xxh64(open(filepath,'rb').read()).hexdigest()
-                    index_line.update([('filehash',filehash),('path',filepath),('filesize',filesize)])
+                    if filehash != '':
+                        index_line.update([('filehash',filehash),('path',filepath),('filesize',filesize)])
                 except:
                     print("broken file: ", filepath)
                     log.info("broken file: %s" %  (filepath))

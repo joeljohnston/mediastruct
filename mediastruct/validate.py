@@ -30,9 +30,14 @@ class validate:
             for path, dirs, files in walk(duplicates_dir):
                 for filename in files:
                     filepath = joinpath( path, filename)
-                    filesize = stat(filepath).st_size
-                    filehash = xxhash.xxh64(open(filepath, 'rb').read()).hexdigest()
-                    tobevalidated.append([{'filehash':filehash,'path':filepath}])
+                    if os.path.isfile(filepath):
+                        filesize = stat(filepath).st_size
+                        try:
+                            filehash = xxhash.xxh64(open(filepath, 'rb').read()).hexdigest()
+                        except:
+                            print("Didnt like this file: ",filepath)
+                        if filehash != '':
+                            tobevalidated.append([{'filehash':filehash,'path':filepath}])
         return tobevalidated 
 
     def iter_media(self,media_dir):
@@ -41,9 +46,14 @@ class validate:
             for path, dirs, files in walk(media_dir):
                 for filename in files:
                     filepath = joinpath( path, filename)
-                    filesize = stat(filepath).st_size
-                    filehash = xxhash.xxh64(open(filepath, 'rb').read()).hexdigest()
-                    mediahashes.append([{'filehash':filehash,'path':filepath}])
+                    if os.path.isfile(filepath):
+                        filesize = stat(filepath).st_size
+                        try:
+                            filehash = xxhash.xxh64(open(filepath, 'rb').read()).hexdigest()
+                        except:
+                            print("Didnt like this file: ",filepath)
+                        if filehash != '':
+                            mediahashes.append([{'filehash':filehash,'path':filepath}])
         return mediahashes
 
 
@@ -53,9 +63,14 @@ class validate:
             for path, dirs, files in walk(archive_dir):
                 for filename in files:
                     filepath = joinpath( path, filename)
-                    filesize = stat(filepath).st_size
-                    filehash = xxhash.xxh64(open(filepath, 'rb').read()).hexdigest()
-                    archivehashes.append([{'filehash':filehash,'path':filepath}])
+                    if os.path.isfile(filepath):
+                        filesize = stat(filepath).st_size
+                        try:
+                            filehash = xxhash.xxh64(open(filepath, 'rb').read()).hexdigest()
+                        except:
+                            print("Didnt like this file",filepath)
+                        if filehash != '':
+                            archivehashes.append([{'filehash':filehash,'path':filepath}])
         return archivehashes 
 
     def find_matches(self,duplicates,mediahashes,archivehashes,validated_dir):

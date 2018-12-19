@@ -12,11 +12,10 @@ class archive:
     If using tape you could set the mediasize value in the config.ini to 1000 (GB) for instance and the archive function 
     will assemble a sequentially numbered series of volumes of that size or slightly less, moving up to 1TB into each i
     directory.  You can then write hat volume off to tape/optical as necessary.'''
-    
+
     #class init
     def __init__(self,archive_dir,data_dir,media_dir,mediasize):
         totalmedia = 0
-
         next_volume = archive.dirstruct(self,archive_dir,media_dir,mediasize)
         files_to_archive = archive.assembleVolume(self,archive_dir,data_dir,media_dir,mediasize,next_volume)
         archive.archive_files(self,files_to_archive,next_volume,archive_dir)
@@ -35,19 +34,26 @@ class archive:
     def assembleVolume(self,archive_dir,data_dir,media_dir,mediasize,next_volume):
         '''loop thru the contents of the working directory and build a recordset for files to be moved'''
         dirname = re.split(r"\/", media_dir)
+        dirname_len = len(dirname) -1
         #convert bytes to GB
         mediasize = int(mediasize) * 1000 * 1000 * 1000
         log.info("Target Volume Size: %s" %  (mediasize))
         archivefiles = [] 
         array = {}
         mediatotal = 0
+        print("archive_dir: ", archive_dir)
+        print("data_dir: ", data_dir)
+        print("media_dir: ", media_dir)
+        print("dirname: ", dirname[dirname_len])
         #check for the data file passed in
-        if os.path.isfile('%s/%s_index.json' % (data_dir, dirname[2])):
-            #loop through 
-            with open('%s/%s_index.json' % (data_dir, dirname[2]), 'r') as f:
+        if os.path.isfile('%s/%s_index.json' % (data_dir, dirname[dirname_len])):
+            print("Im running")
+            #loop through
+            with open('%s/%s_index.json' % (data_dir, dirname[dirname_len]), 'r') as f:
                     array = json.load(f)
                     for g in array:
                         if g != 'du':
+                            print("dir ",dirname[dirname_len])
                             thisfilesize = array[g]['filesize']
                             mediatotal = thisfilesize + int(mediatotal)
                             if mediatotal <= mediasize:
@@ -57,7 +63,6 @@ class archive:
                             else:
                                 next_volume = archive.dirstruct(self,archive_dir,media_dir,mediasize)
                                 mediatotal = 1 
-                                
 
         return archivefiles
 
@@ -73,5 +78,7 @@ class archive:
                 utils.mkdir_p(self, dest_dir)
             from_path =  files_to_archive[h][0]['path']
             log.info("Archiving %s to %s" % (from_path, dest_path))
-            shutil.move(files_to_archive[h][0]['path'], dest_path)
+            if os.path.isfile(files_to_archive[h][0]['path']):
+                print("Moving :", files_to_archive[h][0]['path'])
+                shutil.move(files_to_archive[h][0]['path'], dest_path)
 

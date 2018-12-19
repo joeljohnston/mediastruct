@@ -43,6 +43,9 @@ class dedupe:
         arraylen = len(array)
         print('array_len:', arraylen)
         for d in array:
+            arraylen = arraylen - 1
+            print("dfileid: ", d)
+            print("Remaining Records: ", arraylen)
             #loop through each item in the combined dataset, searching for identical hashes
             for e in array:
                 #init dictionary
@@ -52,7 +55,6 @@ class dedupe:
                 if d != 'du' and e != 'du':
                     #as we loop through match hashes that don't have identical path/name
                     if array[d]['filehash'] == array[e]['filehash'] and array[d]['path'] != array[e]['path']:
-                        print("fileid: ", d)
                         print("filehash: ", array[d]['filehash'])
                         print("filehash: ", array[e]['filehash'])
                         log.info("Duplicate: %s - %s - %s -  %s" % ( array[e]['filehash'],array[d]['path'],array[e]['path'], array[e]['filesize']))
@@ -63,7 +65,7 @@ class dedupe:
                             if array[e]['filehash'] == to_delete[deletes]['filehash'] or e == deletes:
                                 match = 1
                         #make sure our file to be "deleted" (not deleted) is not in the archive already
-                        if match != 1 and 'archive' not in array[e]['path']: 
+                        if match != 1 and 'FullArchive' not in array[e]['path']: 
                             to_delete[e] = index_line
         #loop through the "to be deleted" files and move them to the duplicates directory
         for key in to_delete:
