@@ -34,6 +34,7 @@ class ingest(object):
                     #rename the file with a unique timestamp based name 
                     millis = int(round(time.time() * 1000))
                     newfilename = "%s.%s.%s" % (newfile, millis, ext)
+                    log.info("oldfilename: %s" % (filename))
                     log.info("newfilename: %s" % (newfilename))
                     #new file path
                     filepath = "%s/%s" % (folder,filename)
@@ -49,6 +50,7 @@ class ingest(object):
                         log.info('Moving %s from %s to %s' % (ext,filename,dest))
                         shutil.move(filepath, dest)
                     else:
+                        log.info("Duplicate Name found - new path: %s" % (newdest) )
                         shutil.move(filepath, newdest)
         else:
             log.error("Source Directory {} doesn't exist".format(sourcedir))
