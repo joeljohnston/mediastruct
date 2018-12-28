@@ -9,3 +9,4 @@ local_settings.py
 *.log
 *.json
 config.ini
+__pycache__
