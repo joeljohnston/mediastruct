@@ -7,9 +7,9 @@ import re
 import itertools
 import shutil
 import itertools
+import time
 from itertools import chain
 from collections import OrderedDict
-from collections import Counter
 log = logging.getLogger(__name__)
 log.info('Launching the Dedupe Class')
 
@@ -41,12 +41,10 @@ class dedupe:
     def dups(self, array, duplicates_dir):
         #init dictionaries
         dictlist = [] 
+        to_keep = []
         dictordered = OrderedDict()
-        duplicate = []
-        duplicates = []
-        to_delete = {}
-        id_list = []
-        dictlist_line = {}
+        to_delete = []
+        seen = set()
         #loop thru combined dataset
         arraylen = len(array)
 
@@ -56,32 +54,32 @@ class dedupe:
                 #print(d)
                 dictlist_line = (d,array[d]['filehash'])
                 dictlist.append(dictlist_line)
-                #dictlist[array[d]['filehash']] = dictlist_line
                 #results = [k for k,v in Counter(dictlist[d]['id']) if len(v)>1]
                 #results = [k for k in Counter(dictlist[d]['id']) if len(k)>1]
-        
-        for i,j in dictlist:
-            #print('%s,%s' % (i,j))
-            dictordered.setdefault(j,[]).append(i)
 
-        to_delete = list(chain.from_iterable([j for i, j in dictordered.items() if len(j)>1]))
+        for a, b in dictlist:
+            if not b in seen:
+                seen.add(b)
+                to_keep.append(a)
+
+        to_delete = [(x,y) for x, y in dictlist if x not in to_keep]
+        print("seen_len", len(seen))
+        print("to_delete_len", len(to_delete))
 
         #loop through the "to be deleted" files and move them to the duplicates directory
-        for key in to_delete:
+        for k in range(len(to_delete)):
+            key = to_delete[k][0] 
             if os.path.isfile(array[key]['path']):
-                log.info("Moving Duplicate %s to %s" % (array[key]['path'],duplicates_dir))
-                #get year
-                fullpath = re.split(r"\/",array[key][0]['path'])
-                year = fullpath[3]
-                dest_dir = archive_dir + '/' + str(files_to_archive[h][0]['volume']) + '/' + year + '/' + fullpath[4]
-                dest_path = archive_dir + '/' + str(files_to_archive[h][0]['volume']) + '/' + year + '/' + fullpath[4] + '/' + fullpath[5]
-                if not os.path.isdir(dest_dir):
-                    utils.mkdir_p(self, dest_dir)
-                from_path =  files_to_archive[h][0]['path']
-                log.info("Archiving %s to %s" % (from_path, dest_path))
-                if os.path.isfile(files_to_archive[h][0]['path']):
-                    print("Moving :", files_to_archive[h][0]['path'])
-                    shutil.move(files_to_archive[h][0]['path'], dest_path)
-                
-                shutil.move(array[key]['path'],duplicates_dir + '/')
-            #del array[key]
+                from_path =  array[key]['path']
+                filename = os.path.basename(from_path)
+                dest_path = str("%s/%s" % (duplicates_dir, filename))
+                if os.path.isfile(from_path):
+                    if os.path.isfile(dest_path):
+                        ext = os.path.splitext(from_path)[1][1:]
+                        newfile = os.path.splitext(filename)[0]
+                        millis = int(round(time.time() * 1000))
+                        newfilename = str("%s.%s.%s" % (filename, millis, ext))
+                        dest_path = str("%s/%s" % (duplicates_dir, newfilename))
+                    if 'archive' not in from_path:
+                        log.info("Moving Duplicate %s to %s" % (array[key]['path'],duplicates_dir))
+                        shutil.move(from_path, dest_path)
