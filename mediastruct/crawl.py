@@ -61,7 +61,7 @@ class crawl:
                 filesize = stat(filepath).st_size
                 this_year = int(str(os.path.splitext(filepath)[0][1:]).split('/')[2])
                 #this can be changed out with any hash library you prefer
-                print("year: ", this_year)
+                log.info("Hashing File: %s" % (filepath))
                 try:
                     filehash = xxhash.xxh64(open(filepath,'rb').read()).hexdigest()
                     if filehash != '':
