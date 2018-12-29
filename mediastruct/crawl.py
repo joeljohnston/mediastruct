@@ -59,12 +59,13 @@ class crawl:
                 fileid = str(uuid.uuid1())
                 filepath = joinpath(path,filename)
                 filesize = stat(filepath).st_size
+                this_year = int(str(os.path.splitext(filepath)[0][1:]).split('/')[2])
                 #this can be changed out with any hash library you prefer
-                print("filepath: ", filepath)
+                print("year: ", this_year)
                 try:
                     filehash = xxhash.xxh64(open(filepath,'rb').read()).hexdigest()
                     if filehash != '':
-                        index_line.update([('filehash',filehash),('path',filepath),('filesize',filesize)])
+                        index_line.update([('filehash',filehash),('path',filepath),('filesize',filesize),('year',this_year)])
                         sum_dict[fileid] = index_line
                 except:
                     print("broken file: ", filepath)
