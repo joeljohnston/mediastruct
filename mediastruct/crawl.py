@@ -8,6 +8,7 @@ import json
 import glob
 import uuid
 import time
+import datetime
 from mediastruct.utils import *
 from os import walk, remove, stat
 from os.path import join as joinpath
@@ -59,7 +60,8 @@ class crawl:
                 fileid = str(uuid.uuid1())
                 filepath = joinpath(path,filename)
                 filesize = stat(filepath).st_size
-                this_year = int(str(os.path.splitext(filepath)[0][1:]).split('/')[2])
+                this_year = str(datetime.datetime.fromtimestamp(os.path.getmtime(filepath))).split('-')[0]
+
                 #this can be changed out with any hash library you prefer
                 log.info("Hashing File: %s" % (filepath))
                 try:
