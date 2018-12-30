@@ -48,21 +48,28 @@ class dedupe:
         #loop thru combined dataset
         arraylen = len(array)
 
+        log.info("Looping Through Combined Array and Creating list")
         for d in array:
             if d != 'du':
-                #dictlist_line = ([ ('id',d) ])
-                #print(d)
-                dictlist_line = (d,array[d]['filehash'])
+                dictlist_line = (d,array[d]['filehash'],array[d]['path'])
                 dictlist.append(dictlist_line)
-                #results = [k for k,v in Counter(dictlist[d]['id']) if len(v)>1]
-                #results = [k for k in Counter(dictlist[d]['id']) if len(k)>1]
 
-        for a, b in dictlist:
+        log.info("Looping Through Combined Array and adding archived files to keep list")
+        for a, b, c in dictlist:
+            if 'archive' in c:
+                to_keep.append(a)
+
+        log.info("Looping the dictionary and removing any archive references")
+        for a in to_keep:
+            dictlist.remove(a)
+
+        log.info("Looping the dictionary and isolating 1st record")
+        for a, b, c in dictlist:
             if not b in seen:
                 seen.add(b)
                 to_keep.append(a)
 
-        to_delete = [(x,y) for x, y in dictlist if x not in to_keep]
+        to_delete = [(x,y,z) for x, y, z in dictlist if x not in to_keep]
         print("seen_len", len(seen))
         print("to_delete_len", len(to_delete))
 
