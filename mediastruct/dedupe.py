@@ -40,7 +40,7 @@ class dedupe:
     #cycle through the dataset and find duplicate entries
     def dups(self, array, duplicates_dir):
         #init dictionaries
-        dictlist = [] 
+        dictlist = []
         to_keep = []
         dictordered = OrderedDict()
         to_delete = []
@@ -57,7 +57,9 @@ class dedupe:
         log.info("Looping Through Combined Array and adding archived files to keep list")
         for a, b, c in dictlist:
             if 'archive' in c:
-                to_keep.append(a)
+                log.info("File Already Archived: %s" % (c))
+                if a in to_keep:
+                    to_keep.append(a)
 
         log.info("Looping the dictionary and removing any archive references")
         for a in to_keep:
@@ -75,18 +77,21 @@ class dedupe:
 
         #loop through the "to be deleted" files and move them to the duplicates directory
         for k in range(len(to_delete)):
-            key = to_delete[k][0] 
+            key = to_delete[k][0]
             if os.path.isfile(array[key]['path']):
                 from_path =  array[key]['path']
+                log.info("To Delete : %s" %  (to_delete[k][0]))
                 filename = os.path.basename(from_path)
                 dest_path = str("%s/%s" % (duplicates_dir, filename))
                 if os.path.isfile(from_path):
                     if os.path.isfile(dest_path):
+                        log.info("Found a duplicate named file %s" % (dest_path))
                         ext = os.path.splitext(from_path)[1][1:]
                         newfile = os.path.splitext(filename)[0]
                         millis = int(round(time.time() * 1000))
                         newfilename = str("%s.%s.%s" % (filename, millis, ext))
                         dest_path = str("%s/%s" % (duplicates_dir, newfilename))
+
                     if 'archive' not in from_path:
                         log.info("Moving Duplicate %s to %s" % (array[key]['path'],duplicates_dir))
                         shutil.move(from_path, dest_path)
