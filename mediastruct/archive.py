@@ -63,6 +63,7 @@ class archive:
 
     def archive_files(self, files_to_archive,mediasize,media_dir,next_volume,archive_dir):
         mediasize = int(mediasize) * 1000 * 1000 * 1000
+        log.info("Arhive - Mediasize: %s" % (mediasize))
         mediatotal = 0
         arraylen = len(files_to_archive)
         for h in range(arraylen):
@@ -75,7 +76,9 @@ class archive:
             from_path =  files_to_archive[h][0]['path']
             log.info("Archive - Archiving %s to %s" % (from_path, dest_path))
             thisfilesize = files_to_archive[h][0]['filesize']
+            log.info("Archive - FileSize: %s" % (thisfilesize))
             mediatotal = thisfilesize + int(mediatotal)
+            log.info("Archive - Media Total: %s" % (mediatotal))
             if mediatotal <= mediasize:
                 if not os.path.isdir(dest_dir):
                     utils.mkdir_p(self, dest_dir)
