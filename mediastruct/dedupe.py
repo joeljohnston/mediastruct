@@ -1,4 +1,5 @@
 import os
+import sys
 import logging
 import hashlib
 import json
@@ -37,12 +38,14 @@ class dedupe:
                     combined_array = {**combined_array, **array}
         return combined_array
 
+    def countX(lst, x): 
+        return lst.count(x) 
+
     #cycle through the dataset and find duplicate entries
     def dups(self, array, duplicates_dir):
         #init dictionaries
         dictlist = []
         to_keep = []
-        dictordered = OrderedDict()
         to_delete = []
         seen = set()
         #loop thru combined dataset
@@ -54,33 +57,37 @@ class dedupe:
                 dictlist_line = (d,array[d]['filehash'],array[d]['path'])
                 dictlist.append(dictlist_line)
 
-        log.info("Looping Through Combined Array and adding archived files to keep list")
+        #excluding archive entries from equation
         for a, b, c in dictlist:
-            if 'archive' in c:
-                log.info("File Already Archived: %s" % (c))
-                if a in to_keep:
-                    to_keep.append(a)
-
-        log.info("Looping the dictionary and removing any archive references")
-        for a in to_keep:
-            dictlist.remove(a)
-
-        log.info("Looping the dictionary and isolating 1st record")
-        for a, b, c in dictlist:
-            if not b in seen:
+            if b not in seen and 'archive' in c:
+                log.info("To_keep: %s - %s - %s" % (a,b,c)) 
                 seen.add(b)
                 to_keep.append(a)
 
-        to_delete = [(x,y,z) for x, y, z in dictlist if x not in to_keep]
+        prunedict = [(x) for x in dictlist if not x in to_keep ]
+
+        log.info("Looping Through Combined Array and adding archived files to keep list")
+        for r in range(len(prunedict)):
+            for a, b, c in prunedict:
+                if 'archive' not in c:
+                    if b not in seen:
+                        seen.add(b)
+                        if a not in to_keep:
+                            log.info("To_keep: %s - %s - %s" % (a,b,c)) 
+                            to_keep.append(a)
+                            break
+
+        to_delete = [(x,y,z) for x, y, z in dictlist if x not in to_keep and 'archive' not in z]
+        print(to_delete)
+        sys.exit()
         print("seen_len", len(seen))
         print("to_delete_len", len(to_delete))
-
         #loop through the "to be deleted" files and move them to the duplicates directory
         for k in range(len(to_delete)):
             key = to_delete[k][0]
-            if os.path.isfile(array[key]['path']):
-                from_path =  array[key]['path']
-                log.info("To Delete : %s" %  (to_delete[k][0]))
+            from_path =  array[key]['path']
+            if os.path.isfile(from_path):
+                log.info("To Delete : %s" %  (from_path))
                 filename = os.path.basename(from_path)
                 dest_path = str("%s/%s" % (duplicates_dir, filename))
                 if os.path.isfile(from_path):
@@ -93,5 +100,5 @@ class dedupe:
                         dest_path = str("%s/%s" % (duplicates_dir, newfilename))
 
                     if 'archive' not in from_path:
-                        log.info("Moving Duplicate %s to %s" % (array[key]['path'],duplicates_dir))
+                        log.info("Moving Duplicate %s to %s" % (from_path,duplicates_dir))
                         shutil.move(from_path, dest_path)
