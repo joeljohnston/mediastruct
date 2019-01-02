@@ -10,3 +10,4 @@ local_settings.py
 *.json
 config.ini
 __pycache__
+conf

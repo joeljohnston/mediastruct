@@ -83,12 +83,12 @@ class validate:
             for med in range(mediahashes_len):
                 if duplicates[dup][0]['filehash'] == mediahashes[med][0]['filehash']:
                     matched = 1
-                    log.info("Duplicate %s found in Media %s" % ( duplicates[dup][0]['path'], mediahashes[med][0]['path']))
+                    log.info("Validate - Duplicate %s found in Media %s" % ( duplicates[dup][0]['path'], mediahashes[med][0]['path']))
                     
             for arc in range(archivehashes_len):
                 if duplicates[dup][0]['filehash'] == archivehashes[arc][0]['filehash']:
                     matched = 1
-                    log.info("Duplicate %s found in Media %s" % ( duplicates[dup][0]['path'], archivehashes[arc][0]['path']))
+                    log.info("Validate - Duplicate %s found in Media %s" % ( duplicates[dup][0]['path'], archivehashes[arc][0]['path']))
 
             if matched == 1:
                 shutil.move(duplicates[dup][0]['path'], validated_dir)

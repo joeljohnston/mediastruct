@@ -25,10 +25,10 @@ class crawl:
         dirname = re.split(r"\/",rootdir)
         dirname_len = len(dirname) -1
         print('dirname_len: ', dirname_len)
-        log.info("Crawling %s" % (rootdir))
+        log.info("Crawl - Crawling %s" % (rootdir))
         if os.path.isdir(rootdir):
             if force == True:
-                log.info('Force Attribute set to True - indexing %s' % (rootdir))
+                log.info('Crawl - Force Attribute set to True - indexing %s' % (rootdir))
                 index = crawl.index_sum(self,rootdir,datadir)
             else:
                 #if our data file exists for this directory load it and compare
@@ -42,7 +42,7 @@ class crawl:
                             if currentdu != array['du'] or array['du'] == 0:
                                 index = crawl.index_sum(self,rootdir,datadir)
                             else:
-                                log.info("The Index matches the Directory")
+                                log.info("Crawl - The Index matches the Directory")
                 #otherwise start the index process
                 else:
                     index = crawl.index_sum(self,rootdir,datadir)
@@ -63,7 +63,7 @@ class crawl:
                 this_year = str(datetime.datetime.fromtimestamp(os.path.getmtime(filepath))).split('-')[0]
 
                 #this can be changed out with any hash library you prefer
-                log.info("Hashing File: %s" % (filepath))
+                log.info("Crawl - Hashing File: %s" % (filepath))
                 try:
                     filehash = xxhash.xxh64(open(filepath,'rb').read()).hexdigest()
                     if filehash != '':
@@ -71,7 +71,7 @@ class crawl:
                         sum_dict[fileid] = index_line
                 except:
                     print("broken file: ", filepath)
-                    log.info("broken file: %s" %  (filepath))
+                    log.info("Crawl - broken file: %s" %  (filepath))
                     time.sleep(120)
                 #we're creating a key-based dictionary here
         sum_dict['du'] = utils.getFolderSize(self,rootdir)
@@ -81,5 +81,5 @@ class crawl:
         indexfile.write(jsonoutput)
         indexfile.close()
         #return the key-based dictionary with updated hash values
-        log.info("Completed crawl of %s)" % (rootdir))
+        log.info("Crawl - Completed crawl of %s)" % (rootdir))
         return sum_dict

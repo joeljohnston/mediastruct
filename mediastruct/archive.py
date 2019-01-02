@@ -36,7 +36,7 @@ class archive:
         '''loop thru the contents of the working directory and build a recordset for files to be moved'''
         dirname = re.split(r"\/", media_dir)
         dirname_len = len(dirname) -1
-        log.info("Target Volume Size: %s" %  (mediasize))
+        log.info("Archive - Target Volume Size: %s" %  (mediasize))
         archivefiles = [] 
         array = {}
         mediatotal = 0
@@ -55,7 +55,7 @@ class archive:
                         if g != 'du':
                             this_year = str(array[g]['year'])
                             #print("dir ",dirname[dirname_len])
-                            log.info("Adding %s to Archive" % (array[g]['path']))
+                            log.info("Archive - Adding %s to Archive" % (array[g]['path']))
                             #adding file to the dictionary used to move files
                             archivefiles.append([{"year": this_year, "path": array[g]['path'], "filesize":array[g]['filesize']}])
             sortedarchive = sorted(archivefiles, key=lambda x: x[0]['year'])
@@ -69,20 +69,18 @@ class archive:
             #get year
             fullpath = re.split(r"\/",files_to_archive[h][0]['path'])
             fpath_len = len(fullpath)
-            print("fpath_len", fpath_len)
-            print("fpath", fullpath[fpath_len-1])
             year = files_to_archive[h][0]['year'] 
             dest_dir = archive_dir + '/' + str(next_volume) + '/' + year + '/' + fullpath[fpath_len-2]
             dest_path = archive_dir + '/' + str(next_volume) + '/' + year + '/' + fullpath[fpath_len-2] + '/' + fullpath[fpath_len-1]
             from_path =  files_to_archive[h][0]['path']
-            log.info("Archiving %s to %s" % (from_path, dest_path))
+            log.info("Archive - Archiving %s to %s" % (from_path, dest_path))
             thisfilesize = files_to_archive[h][0]['filesize']
             mediatotal = thisfilesize + int(mediatotal)
             if mediatotal <= mediasize:
                 if not os.path.isdir(dest_dir):
                     utils.mkdir_p(self, dest_dir)
                 if os.path.isfile(files_to_archive[h][0]['path']):
-                    log.info("Moving : %s to %s" % (files_to_archive[h][0]['path'],dest_path))
+                    log.info("Archive - Moving : %s to %s" % (files_to_archive[h][0]['path'],dest_path))
                     shutil.move(files_to_archive[h][0]['path'], dest_path)
             else:
                 next_volume = archive.dirstruct(self,archive_dir,media_dir,mediasize)

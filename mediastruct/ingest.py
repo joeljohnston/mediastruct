@@ -6,7 +6,7 @@ import logging
 from glob import glob
 
 log = logging.getLogger(__name__)
-log.info('Launching the Crawl Class')
+log.info('Ingest - Launching the Ingest Class')
 
 class ingest(object):
     '''the ingest class manages contents entering the workflow by organizing files by their last modified date
@@ -20,7 +20,7 @@ class ingest(object):
     def mvrnm(self,sourcedir,destdir):
         '''this function ensures that no data is lost via file collisions as files are moved into the working dir
         by renaming them with a .<unixdatetimestamp. addition to the existing filename'''
-        log.info("Dirctory root: %s" % (sourcedir))
+        log.info("Ingest - Directory root: %s" % (sourcedir))
         #ensure the source directory exists
         if os.path.isdir(sourcedir):
             #change parser to the sourcedir
@@ -34,8 +34,8 @@ class ingest(object):
                     #rename the file with a unique timestamp based name 
                     millis = int(round(time.time() * 1000))
                     newfilename = "%s.%s.%s" % (newfile, millis, ext)
-                    log.info("oldfilename: %s" % (filename))
-                    log.info("newfilename: %s" % (newfilename))
+                    log.info("Ingest - oldfilename: %s" % (filename))
+                    log.info("Ingest - newfilename: %s" % (newfilename))
                     #new file path
                     filepath = "%s/%s" % (folder,filename)
                     ftime = time.gmtime(os.path.getmtime(filepath))
@@ -47,10 +47,10 @@ class ingest(object):
                     if not os.path.exists(dest_dir):
                         os.makedirs(dest_dir)
                     if not os.path.exists(dest):
-                        log.info('Moving %s from %s to %s' % (ext,filename,dest))
+                        log.info('Ingest - Moving %s from %s to %s' % (ext,filename,dest))
                         shutil.move(filepath, dest)
                     else:
-                        log.info("Duplicate Name found - new path: %s" % (newdest) )
+                        log.info("Ingest - Duplicate Name found - new path: %s" % (newdest) )
                         shutil.move(filepath, newdest)
         else:
-            log.error("Source Directory {} doesn't exist".format(sourcedir))
+            log.error("Ingest - Source Directory {} doesn't exist".format(sourcedir))
