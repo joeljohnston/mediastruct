@@ -51,7 +51,6 @@ class archive:
                     array = json.load(f)
                     #print(array)
                     #array = sorted(unordered_array.items())
-                    print(array)
                     for g in array:
                         if g != 'du':
                             this_year = str(array[g]['year'])
@@ -67,12 +66,14 @@ class archive:
         mediatotal = 0
         arraylen = len(files_to_archive)
         for h in range(arraylen):
-            #print(files_to_archive[h][0]['year'])
             #get year
             fullpath = re.split(r"\/",files_to_archive[h][0]['path'])
+            fpath_len = len(fullpath)
+            print("fpath_len", fpath_len)
+            print("fpath", fullpath[fpath_len-1])
             year = files_to_archive[h][0]['year'] 
-            dest_dir = archive_dir + '/' + str(next_volume) + '/' + year + '/' + fullpath[4]
-            dest_path = archive_dir + '/' + str(next_volume) + '/' + year + '/' + fullpath[4] + '/' + fullpath[5]
+            dest_dir = archive_dir + '/' + str(next_volume) + '/' + year + '/' + fullpath[fpath_len-2]
+            dest_path = archive_dir + '/' + str(next_volume) + '/' + year + '/' + fullpath[fpath_len-2] + '/' + fullpath[fpath_len-1]
             from_path =  files_to_archive[h][0]['path']
             log.info("Archiving %s to %s" % (from_path, dest_path))
             thisfilesize = files_to_archive[h][0]['filesize']
@@ -81,7 +82,7 @@ class archive:
                 if not os.path.isdir(dest_dir):
                     utils.mkdir_p(self, dest_dir)
                 if os.path.isfile(files_to_archive[h][0]['path']):
-                    print("Moving :", files_to_archive[h][0]['path'])
+                    log.info("Moving : %s to %s" % (files_to_archive[h][0]['path'],dest_path))
                     shutil.move(files_to_archive[h][0]['path'], dest_path)
             else:
                 next_volume = archive.dirstruct(self,archive_dir,media_dir,mediasize)

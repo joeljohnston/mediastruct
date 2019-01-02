@@ -136,7 +136,7 @@ class mediastruct_init(object):
         #the dedupe function combines all hash indexes and analyzes the dataset for duplicates
         data_files = glob.glob(jsondatadir + '/*.json')
         #run the dedupe function
-        dedupe.dedupe(data_files,duplicatedir)
+        dedupe.dedupe(data_files,duplicatedir,archivedir)
 
     def archive(self):
         print("Archiving")
