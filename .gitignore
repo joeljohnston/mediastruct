@@ -11,3 +11,7 @@ local_settings.py
 config.ini
 __pycache__
 conf
+logs
+mediastruct.log
+mediastruct.log.20190108
+data

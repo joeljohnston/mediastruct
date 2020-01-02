@@ -17,11 +17,11 @@ class archive:
     #class init
     def __init__(self,archive_dir,data_dir,media_dir,mediasize):
         totalmedia = 0
-        next_volume = archive.dirstruct(self,archive_dir,media_dir,mediasize)
+        next_volume = archive.dirstruct(self,archive_dir,media_dir)
         files_to_archive = archive.assembleVolume(self,archive_dir,data_dir,media_dir,mediasize,next_volume)
         archive.archive_files(self,files_to_archive,mediasize,media_dir,next_volume,archive_dir)
 
-    def dirstruct(self,archive_dir,media_dir,mediasize):
+    def dirstruct(self,archive_dir,media_dir):
         '''builds the volume directory structure based on what is already there'''
         folders = 0
         vol_size = 0
@@ -37,7 +37,7 @@ class archive:
         dirname = re.split(r"\/", media_dir)
         dirname_len = len(dirname) -1
         log.info("Archive - Target Volume Size: %s" %  (mediasize))
-        archivefiles = [] 
+        archivefiles = []
         array = {}
         mediatotal = 0
         print("archive_dir: ", archive_dir)
@@ -59,7 +59,7 @@ class archive:
                             #adding file to the dictionary used to move files
                             archivefiles.append([{"year": this_year, "path": array[g]['path'], "filesize":array[g]['filesize']}])
             sortedarchive = sorted(archivefiles, key=lambda x: x[0]['year'])
-        return sortedarchive 
+        return sortedarchive
 
     def archive_files(self, files_to_archive,mediasize,media_dir,next_volume,archive_dir):
         mediasize = int(mediasize) * 1000 * 1000 * 1000
@@ -70,15 +70,15 @@ class archive:
             #get year
             fullpath = re.split(r"\/",files_to_archive[h][0]['path'])
             fpath_len = len(fullpath)
-            year = files_to_archive[h][0]['year'] 
+            year = files_to_archive[h][0]['year']
             dest_dir = archive_dir + '/' + str(next_volume) + '/' + year + '/' + fullpath[fpath_len-2]
             dest_path = archive_dir + '/' + str(next_volume) + '/' + year + '/' + fullpath[fpath_len-2] + '/' + fullpath[fpath_len-1]
             from_path =  files_to_archive[h][0]['path']
-            log.info("Archive - Archiving %s to %s" % (from_path, dest_path))
+            #log.info("Archive - Archiving %s to %s" % (from_path, dest_path))
             thisfilesize = files_to_archive[h][0]['filesize']
-            log.info("Archive - FileSize: %s" % (thisfilesize))
+            #log.info("Archive - FileSize: %s" % (thisfilesize))
             mediatotal = thisfilesize + int(mediatotal)
-            log.info("Archive - Media Total: %s" % (mediatotal))
+            #log.info("Archive - Media Total: %s" % (mediatotal))
             if mediatotal <= mediasize:
                 if not os.path.isdir(dest_dir):
                     utils.mkdir_p(self, dest_dir)
@@ -86,5 +86,6 @@ class archive:
                     log.info("Archive - Moving : %s to %s" % (files_to_archive[h][0]['path'],dest_path))
                     shutil.move(files_to_archive[h][0]['path'], dest_path)
             else:
-                next_volume = archive.dirstruct(self,archive_dir,media_dir,mediasize)
+                next_volume = archive.dirstruct(self,archive_dir,media_dir)
                 mediatotal=1
+            log.info("Total Volume Size: %sGB" % (mediatotal/1000/1000/1000))
