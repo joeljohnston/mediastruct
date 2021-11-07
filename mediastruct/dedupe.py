@@ -63,7 +63,7 @@ class dedupe:
         #excluding archive entries from equation
         for a, b, c in dictlist:
             if b not in seen and archive_dir in c:
-                log.info("Dedupe - To_keep: %s - %s - %s" % (a,b,c)) 
+                log.info("Dedupe - To_keep: %s - %s - %s" % (a,b,c))
                 seen.add(b)
                 to_keep.append(a)
 
