@@ -1,0 +1,7 @@
+README.md
+mediastruct
+setup.py
+mediastruct.egg-info/PKG-INFO
+mediastruct.egg-info/SOURCES.txt
+mediastruct.egg-info/dependency_links.txt
+mediastruct.egg-info/top_level.txt
