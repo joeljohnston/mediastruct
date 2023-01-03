@@ -28,11 +28,6 @@ class archive:
         #create the next directory after the last non-empty directory
         folders += len([name for name in os.listdir(archive_dir)]) 
         next_volume = folders + 1
-	print("Next Volume Number: %s", next_volume)
-	response = input("Is this okay?")
-	if response != "yes":
-            sys.exit("Exiting")
-	
         #create next volume directory 
         utils.mkdir_p(self, (archive_dir + '/' + str(next_volume)))
         return next_volume

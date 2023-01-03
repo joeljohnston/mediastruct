@@ -1,7 +1,13 @@
 README.md
 mediastruct
 setup.py
-mediastruct.egg-info/PKG-INFO
-mediastruct.egg-info/SOURCES.txt
-mediastruct.egg-info/dependency_links.txt
-mediastruct.egg-info/top_level.txt
+mediastruct/__init__.py
+mediastruct/__main__.py
+mediastruct/archive.py
+mediastruct/crawl.py
+mediastruct/dedupe.py
+mediastruct/ingest.py
+mediastruct/logger.py
+mediastruct/sort.py
+mediastruct/utils.py
+mediastruct/validate.py
