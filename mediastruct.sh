@@ -1,4 +1,5 @@
 #!/bin/bash
+#Runs all steps of process
 rsync -av 10.99.0.11:/data/data/media/ingest/ /data/media/ingest/
 python3 mediastruct ingest
 python3 mediastruct crawl 
