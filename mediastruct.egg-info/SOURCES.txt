@@ -1,3 +1,4 @@
+LICENSE
 README.md
 mediastruct
 setup.py
@@ -11,3 +12,7 @@ mediastruct/logger.py
 mediastruct/sort.py
 mediastruct/utils.py
 mediastruct/validate.py
+mediastruct.egg-info/PKG-INFO
+mediastruct.egg-info/SOURCES.txt
+mediastruct.egg-info/dependency_links.txt
+mediastruct.egg-info/top_level.txt
