@@ -1,0 +1,4 @@
+xxhash
+
+[:platform_system == "Windows"]
+windows-curses

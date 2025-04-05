@@ -9,10 +9,13 @@ mediastruct/crawl.py
 mediastruct/dedupe.py
 mediastruct/ingest.py
 mediastruct/logger.py
+mediastruct/monitor.py
 mediastruct/sort.py
 mediastruct/utils.py
 mediastruct/validate.py
 mediastruct.egg-info/PKG-INFO
 mediastruct.egg-info/SOURCES.txt
 mediastruct.egg-info/dependency_links.txt
+mediastruct.egg-info/entry_points.txt
+mediastruct.egg-info/requires.txt
 mediastruct.egg-info/top_level.txt

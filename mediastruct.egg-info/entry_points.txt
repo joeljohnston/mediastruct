@@ -1,0 +1,3 @@
+[console_scripts]
+mediastruct = mediastruct.__main__:main
+
