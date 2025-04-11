@@ -1,3 +1,4 @@
+pyyaml
 xxhash
 
 [:platform_system == "Windows"]

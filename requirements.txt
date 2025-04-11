@@ -2,3 +2,4 @@ dicttools
 pillow
 configparser
 xxhash
+pyyaml

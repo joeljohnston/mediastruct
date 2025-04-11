@@ -1,16 +1,17 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='mediastruct',  # Name of the PyPI package
-    version='0.1',       # Version number
+    name='mediastruct',
+    version='0.2',  # Increment version to ensure the update is recognized
     packages=find_packages(include=['mediastruct', 'mediastruct.*']),
     install_requires=[
-        'xxhash',        # Required for hashing
-        'windows-curses; platform_system=="Windows"',  # Required for curses on Windows
+        'xxhash',
+        'pyyaml',  # Add PyYAML dependency
+        'windows-curses; platform_system=="Windows"',
     ],
     entry_points={
         'console_scripts': [
-            'mediastruct = mediastruct.__main__:main',  # Creates the `mediastruct` command
+            'mediastruct = mediastruct.__main__:main',
         ],
     },
 )
