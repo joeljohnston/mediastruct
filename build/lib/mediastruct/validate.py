@@ -5,10 +5,12 @@ import time
 import shutil
 import json
 import yaml
+import xxhash
 from glob import glob
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from mediastruct.utils import *
+from os import walk, stat
 
 log = logging.getLogger(__name__)
 
@@ -22,15 +24,20 @@ class validate:
     def __init__(self, duplicates_dir, media_dir, archive_dir, validated_dir, monitor=None):
         self.monitor = monitor
         self.duplicates_dir = duplicates_dir
+        self.media_dir = media_dir
+        self.archive_dir = archive_dir
         self.validated_dir = validated_dir
 
         if self.monitor:
             self.monitor.update_progress("validate", status="Starting", processed=0, total=0, current="Initializing validation process")
 
-        # Load precomputed hashes
+        # Load precomputed hashes, falling back to rehashing if index files are missing
         duplicates = self.load_duplicates(duplicates_dir)
         mediahashes = self.load_media(media_dir)
         archivehashes = self.load_archive(archive_dir)
+
+        # Log the number of files loaded
+        log.info(f"Validate - Loaded {len(duplicates)} duplicates, {len(mediahashes)} media files, {len(archivehashes)} archive files")
 
         # Build a hash table for fast lookups
         hash_table = self.build_hash_table(mediahashes, archivehashes)
@@ -41,67 +48,108 @@ class validate:
         if self.monitor:
             self.monitor.update_progress("validate", status="Completed", processed=100, total=100, current="Validation finished")
 
+    def _rehash_files(self, directory: str, prefix: str) -> list:
+        """Rehash files in the given directory if index files are missing."""
+        file_list = []
+        if not os.path.isdir(directory):
+            log.error(f"Validate - Directory {directory} does not exist")
+            return file_list
+
+        total_files = sum(len(files) for _, _, files in walk(directory))
+        processed_files = 0
+
+        if self.monitor:
+            self.monitor.update_progress("validate", status="Running", processed=0, total=total_files, current=f"Rehashing files in {directory}")
+
+        for path, _, files in walk(directory):
+            for filename in files:
+                filepath = os.path.join(path, filename)
+                if os.path.isfile(filepath):
+                    try:
+                        filehash = xxhash.xxh64(open(filepath, 'rb').read()).hexdigest()
+                        file_list.append({'key': filepath, 'filehash': filehash, 'path': filepath})
+                    except Exception as e:
+                        log.error(f"Validate - Failed to hash file {filepath}: {e}")
+                        continue
+
+                    processed_files += 1
+                    if self.monitor and total_files > 0:
+                        self.monitor.update_progress("validate", status="Running", processed=processed_files, total=total_files, current=f"Rehashing {prefix}: {filename}")
+
+        log.info(f"Validate - Rehashed {len(file_list)} files in {directory}")
+        return file_list
+
     def load_duplicates(self, duplicates_dir):
-        """Load hashes for duplicates from the JSON index file."""
+        """Load hashes for duplicates from the JSON index file, falling back to rehashing if missing."""
         tobevalidated = []
         if not os.path.isdir(duplicates_dir):
             log.error(f"Validate - Duplicates directory {duplicates_dir} does not exist")
             return tobevalidated
 
-        # Load the JSON index file for /data/ingest (which includes duplicates moved by dedupe)
+        # Try to load from the JSON index file
         index_file = "/opt/mediastruct/data/ingest_index.json"
-        if not os.path.isfile(index_file):
-            log.error(f"Validate - Index file {index_file} does not exist")
-            return tobevalidated
+        if os.path.isfile(index_file):
+            try:
+                with open(index_file, 'r') as f:
+                    array = json.load(f)
 
-        with open(index_file, 'r') as f:
-            array = json.load(f)
+                total_files = sum(1 for key, value in array.items() if key != 'du' and duplicates_dir in value['path'])
+                processed_files = 0
 
-        total_files = sum(1 for key, value in array.items() if key != 'du' and duplicates_dir in value['path'])
-        processed_files = 0
+                if self.monitor:
+                    self.monitor.update_progress("validate", status="Running", processed=0, total=total_files, current="Loading duplicates")
 
-        if self.monitor:
-            self.monitor.update_progress("validate", status="Running", processed=0, total=total_files, current="Loading duplicates")
+                for key, value in array.items():
+                    if key != 'du' and duplicates_dir in value['path']:
+                        tobevalidated.append({'key': key, 'filehash': value['filehash'], 'path': value['path']})
+                        processed_files += 1
+                        if self.monitor and total_files > 0:
+                            self.monitor.update_progress("validate", status="Running", processed=processed_files, total=total_files, current=f"Loading duplicate: {os.path.basename(value['path'])}")
 
-        for key, value in array.items():
-            if key != 'du' and duplicates_dir in value['path']:
-                tobevalidated.append({'key': key, 'filehash': value['filehash'], 'path': value['path']})
-                processed_files += 1
-                if self.monitor and total_files > 0:
-                    self.monitor.update_progress("validate", status="Running", processed=processed_files, total=total_files, current=f"Loading duplicate: {os.path.basename(value['path'])}")
+                log.info(f"Validate - Loaded {len(tobevalidated)} duplicates from {index_file}")
+            except Exception as e:
+                log.error(f"Validate - Failed to load index file {index_file}: {e}")
+                tobevalidated = self._rehash_files(duplicates_dir, "duplicates")
+        else:
+            log.error(f"Validate - Index file {index_file} does not exist, falling back to rehashing")
+            tobevalidated = self._rehash_files(duplicates_dir, "duplicates")
 
-        log.info(f"Validate - Loaded {len(tobevalidated)} duplicates from {index_file}")
         return tobevalidated
 
     def load_media(self, media_dir):
-        """Load hashes for media files from the JSON index file."""
+        """Load hashes for media files from the JSON index file, falling back to rehashing if missing."""
         mediahashes = []
         if not os.path.isdir(media_dir):
             log.error(f"Validate - Media directory {media_dir} does not exist")
             return mediahashes
 
         index_file = "/opt/mediastruct/data/media_index.json"
-        if not os.path.isfile(index_file):
-            log.error(f"Validate - Index file {index_file} does not exist")
-            return mediahashes
+        if os.path.isfile(index_file):
+            try:
+                with open(index_file, 'r') as f:
+                    array = json.load(f)
 
-        with open(index_file, 'r') as f:
-            array = json.load(f)
+                total_files = sum(1 for key, value in array.items() if key != 'du')
+                processed_files = 0
 
-        total_files = sum(1 for key, value in array.items() if key != 'du')
-        processed_files = 0
+                if self.monitor:
+                    self.monitor.update_progress("validate", status="Running", processed=0, total=total_files, current="Loading media files")
 
-        if self.monitor:
-            self.monitor.update_progress("validate", status="Running", processed=0, total=total_files, current="Loading media files")
+                for key, value in array.items():
+                    if key != 'du':
+                        mediahashes.append({'key': key, 'filehash': value['filehash'], 'path': value['path']})
+                        processed_files += 1
+                        if self.monitor and total_files > 0:
+                            self.monitor.update_progress("validate", status="Running", processed=processed_files, total=total_files, current=f"Loading media file: {os.path.basename(value['path'])}")
 
-        for key, value in array.items():
-            if key != 'du':
-                mediahashes.append({'key': key, 'filehash': value['filehash'], 'path': value['path']})
-                processed_files += 1
-                if self.monitor and total_files > 0:
-                    self.monitor.update_progress("validate", status="Running", processed=processed_files, total=total_files, current=f"Loading media file: {os.path.basename(value['path'])}")
+                log.info(f"Validate - Loaded {len(mediahashes)} media files from {index_file}")
+            except Exception as e:
+                log.error(f"Validate - Failed to load index file {index_file}: {e}")
+                mediahashes = self._rehash_files(media_dir, "media")
+        else:
+            log.error(f"Validate - Index file {index_file} does not exist, falling back to rehashing")
+            mediahashes = self._rehash_files(media_dir, "media")
 
-        log.info(f"Validate - Loaded {len(mediahashes)} media files from {index_file}")
         return mediahashes
 
     def load_archive(self, archive_dir):

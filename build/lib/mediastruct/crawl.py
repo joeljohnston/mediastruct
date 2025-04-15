@@ -123,6 +123,7 @@ class crawl:
         except Exception as e:
             log.error(f"Crawl - Failed to write metadata file {metadata_path}: {e}")
 
+        log.info(f"Crawl - Indexed {len(metadata['files'])} files in {directory}")
         return metadata
 
     def index_sum(self, rootdir, datadir, force):
@@ -171,6 +172,7 @@ class crawl:
                 jsonoutput = json.dumps(sum_dict)
                 indexfile.write(jsonoutput)
             log.debug(f"Crawl - Wrote index file: {indexfilepath}")
+            log.info(f"Crawl - Indexed {len(sum_dict) - 1} files to {indexfilepath}")
         except Exception as e:
             log.error(f"Crawl - Failed to write index file {indexfilepath}: {e}")
 

@@ -60,6 +60,7 @@ class dedupe:
             else:
                 log.warning(f"Dedupe - File not found: {i}")
 
+        log.info(f"Dedupe - Combined {len(combined_array) - ('du' in combined_array)} entries from {total_files} files")
         return combined_array
 
     def _get_archive_hashes(self, archive_dir: str) -> dict:
@@ -110,6 +111,7 @@ class dedupe:
                 self.monitor.update_progress("dedupe", status="Running", processed=processed_dirs, total=total_dirs, current=f"Processed archive directory: {sub_dir.name}")
             log.debug(f"Dedupe - Processed {processed_dirs}/{total_dirs} archive directories ({(processed_dirs/total_dirs)*100:.1f}%)")
 
+        log.info(f"Dedupe - Loaded {len(archive_hashes)} archive hashes from {archive_dir}")
         return archive_hashes
 
     def _process_entry(self, entry, seen, to_keep, archive_dir_name):
@@ -229,6 +231,7 @@ class dedupe:
 
         print("seen_len", len(seen))
         print("to_delete_len", len(to_delete))
+        log.info(f"Dedupe - Identified {len(to_delete)} duplicates to move to {self.duplicates_dir}")
 
         # Check ingest directory for duplicates against archive
         ingest_dir = Path("/data/ingest")
@@ -291,3 +294,5 @@ class dedupe:
                 processed_to_delete += 1
                 if self.monitor and total_to_delete > 0:
                     self.monitor.update_progress("dedupe", status="Running", processed=processed_to_delete, total=total_to_delete, current=f"Moved {processed_to_delete}/{total_to_delete} duplicates")
+
+        log.info(f"Dedupe - Moved {processed_to_delete} duplicates to {self.duplicates_dir}")
