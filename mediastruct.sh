@@ -27,13 +27,6 @@ mediastruct $ENABLE_MONITOR crawl
 echo "Running dedupe..."
 mediastruct $ENABLE_MONITOR dedupe
 
-# Re-run crawl to index files moved to /data/media/duplicates
-echo "Running crawl again to re-index duplicates..."
-mediastruct $ENABLE_MONITOR crawl
-
-echo "Running archive..."
-mediastruct $ENABLE_MONITOR archive
-
 echo "Running validate..."
 mediastruct $ENABLE_MONITOR validate
 

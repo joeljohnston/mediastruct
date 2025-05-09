@@ -1,307 +1,130 @@
 import os
 import sys
-import configparser
-import glob
 import logging
-import logging.config
 import argparse
+import configparser
+import pkg_resources
+from pathlib import Path
+from mediastruct import crawl, dedupe
 
-# Set up a temporary logger to capture early debug messages
+# Setup logging
 log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
-console = logging.StreamHandler()
-console.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s %(message)s')
-console.setFormatter(formatter)
-log.addHandler(console)
-log.debug("Starting mediastruct application")
 
-# Add the parent directory to sys.path to ensure the mediastruct package is found
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-log.debug("Added parent directory to sys.path")
+def setup_logging(logdir):
+    """Setup logging with rotation to the specified log directory."""
+    log_file_path = os.path.join(logdir, "mediastruct.log")
+    log_dir = os.path.dirname(log_file_path)
 
-# Import local classes
-log.debug("Importing local classes")
-from mediastruct import ingest
-from mediastruct import crawl
-from mediastruct import dedupe
-from mediastruct import archive
-from mediastruct import validate
-from mediastruct.monitor import ProgressMonitor
-log.debug("Finished importing local classes")
+    # Ensure the log directory exists
+    try:
+        os.makedirs(log_dir, exist_ok=True)
+    except Exception as e:
+        print(f"Error creating log directory {log_dir}: {e}")
+        sys.exit(1)
 
-# Config files - create with defaults if they don't exist
-configfile_name = "conf/config.ini"
-log.debug(f"Checking for config file: {configfile_name}")
-if not os.path.isfile(configfile_name):
-    log.debug("Config file not found, creating with defaults")
-    cfgfile = open(configfile_name, 'w')
-    appConfig = configparser.ConfigParser()
-    appConfig.add_section('ingestdirs')
-    appConfig.set('ingestdirs', 'ingestdir', '/data/ingest')
-    appConfig.add_section('workingdirs')
-    appConfig.set('workingdirs', 'workingdir', '/data/media')
-    appConfig.add_section('archivedir')
-    appConfig.set('archivedir', 'archivedir', '/data/archive')
-    appConfig.add_section('archivemedia')
-    appConfig.set('archivemedia', 'mediasize', '24')
-    appConfig.set('archivemedia', 'burnedtag', 'wr')
-    appConfig.add_section('duplicates')
-    appConfig.set('duplicates', 'duplicatedir', '/data/duplicates')
-    appConfig.add_section('validated')
-    appConfig.set('validated', 'validateddir', '/validated')
-    appConfig.add_section('datadir')
-    appConfig.set('datadir', 'jsondatadir', 'data')
-    appConfig.set('datadir', 'logdir', '/opt/mediastruct/logs')
-    appConfig.write(cfgfile)
-    cfgfile.close()
-    log.debug("Created config file with defaults")
-else:
-    log.debug("Config file found, reading configuration")
-    config = configparser.ConfigParser()
-    config.read('conf/config.ini')
-    ingestdir = config['ingestdirs']['ingestdir']
-    workingdir = config['workingdirs']['workingdir']
-    archivedir = config['archivedir']['archivedir']
-    mediasize = config['archivemedia']['mediasize']
-    burnedtag = config['archivemedia']['burnedtag']
-    duplicatedir = config['duplicates']['duplicatedir']
-    validateddir = config['validated']['validateddir']
-    jsondatadir = config['datadir']['jsondatadir']
-    logdir = config['datadir']['logdir']
-    log.debug(f"Read configuration: logdir={logdir}")
+    # Configure logging with rotation
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.handlers.RotatingFileHandler(
+                log_file_path, maxBytes=500*1024*1024, backupCount=5
+            ),
+            logging.StreamHandler()
+        ]
+    )
+    log.debug(f"Logging configured to write to {log_file_path}")
 
-# Setup Paths
-this_path = os.path.dirname(os.path.realpath(__file__))
-one_up = os.path.dirname(os.path.realpath(__file__)) + '/../'
-app_path = os.path.join(this_path, one_up)
-config_path = app_path + 'conf/'
-log.debug(f"Set up paths: this_path={this_path}, app_path={app_path}")
+class mediastruct:
+    def __init__(self):
+        print("Setting up sys.path")
+        log.debug("Setting up sys.path")
+        self.this_path = os.path.dirname(os.path.abspath(__file__))
+        self.app_path = os.path.abspath(os.path.join(self.this_path, '..'))
+        sys.path.append(self.app_path)
 
-# Logging
-log_path = '/opt/mediastruct/logs/mediastruct.log'  # Use absolute path
-log.debug(f"Setting log file path: {log_path}")
-# Ensure the log directory exists
-log_dir = os.path.dirname(log_path)
-try:
-    os.makedirs(log_dir, exist_ok=True)
-    log.debug(f"Created log directory: {log_dir}")
-except Exception as e:
-    log.error(f"Failed to create log directory {log_dir}: {e}")
-    sys.exit(1)
+        print("Importing local classes")
+        log.debug("Importing local classes")
 
-# Configure logging with DEBUG level for both file and console
-try:
-    # Remove any existing handlers to avoid conflicts
-    for handler in logging.getLogger('').handlers[:]:
-        logging.getLogger('').removeHandler(handler)
-    # Set up file handler
-    file_handler = logging.FileHandler(log_path)
-    file_handler.setLevel(logging.DEBUG)
-    file_formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s %(message)s', datefmt='%Y-%m-%d %I:%M:%S %p %Z')
-    file_handler.setFormatter(file_formatter)
-    # Set up console handler
-    console = logging.StreamHandler()
-    console.setLevel(logging.DEBUG)
-    console_formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
-    console.setFormatter(console_formatter)
-    # Configure root logger
-    logging.getLogger('').setLevel(logging.DEBUG)
-    logging.getLogger('').addHandler(file_handler)
-    logging.getLogger('').addHandler(console)
-    log.debug("Logging configuration set up successfully")
-except Exception as e:
-    print(f"Failed to set up logging: {e}", file=sys.stderr)
-    sys.exit(1)
+        # Setup configuration
+        config_path = "/etc/mediastruct/config.ini"
+        self.config = configparser.ConfigParser()
 
-class mediastruct_init:
-    def __init__(self, enable_monitor=False):
-        log.debug("Initializing mediastruct_init")
-        self.monitor = None
-        if enable_monitor:
+        # Default configuration values
+        self.config['Paths'] = {
+            'logdir': '/data/logs',
+            'datadir': '/opt/mediastruct/data',
+            'ingest_dir': '/data/media/ingest',
+            'media_dir': '/data/media',
+            'archive_dir': '/data/archive',
+            'duplicates_dir': '/data/media/duplicates',
+            'validated_dir': '/data/media/validated',
+        }
+
+        # Try to read the config file from /etc/mediastruct/config.ini
+        if os.path.isfile(config_path):
             try:
-                log.debug("Attempting to initialize ProgressMonitor")
-                self.monitor = ProgressMonitor()
-                self.monitor.start()
-                log.debug("ProgressMonitor started successfully")
+                self.config.read(config_path)
+                print(f"Read configuration from {config_path}")
+                log.debug(f"Read configuration from {config_path}")
             except Exception as e:
-                log.error(f"Failed to initialize ProgressMonitor: {e}")
-                log.info("Falling back to logging-only mode")
+                print(f"Error reading config file {config_path}: {e}")
+                log.error(f"Error reading config file {config_path}: {e}")
+        else:
+            print(f"Config file {config_path} not found, using defaults")
+            log.debug(f"Config file {config_path} not found, using defaults")
 
-        log.info("########################## Starting Medistruct ##########################")
+        # Extract paths from config
+        self.logdir = self.config['Paths']['logdir']
+        self.datadir = self.config['Paths']['datadir']
+        self.ingestdir = self.config['Paths']['ingest_dir']
+        self.workingdir = self.config['Paths']['media_dir']
+        self.archivedir = self.config['Paths']['archive_dir']
+        self.duplicatedir = self.config['Paths']['duplicates_dir']
+        self.validateddir = self.config['Paths']['validated_dir']
 
-        # argparse init
-        log.debug("Setting up argument parser")
-        parser = argparse.ArgumentParser(description='Manage media file structure for archiving.', usage='''mediastruct [-m] <command> [<args>]
-        Commands:
-        ingest -  Moves files from the ingest directory set in conf/config.ini to the working directory set in conf/config.ini in a date structure
+        print(f"Set up paths: this_path={self.this_path}, app_path={self.app_path}")
+        log.debug(f"Set up paths: this_path={self.this_path}, app_path={self.app_path}")
 
-        crawl -   Iterates through all configured directories (except duplicates) and creates a hash index json file in data/
+        # Setup logging with the specified log directory
+        setup_logging(self.logdir)
 
-        dedupe -  Combines all configured directory's json datasets and moves duplicates in the working directory or ingest into the duplicates directory
+        # Setup argument parser
+        self.parser = argparse.ArgumentParser(description='MediaStruct')
+        self.parser.add_argument('command', choices=['crawl', 'dedupe'], help='Command to execute')
+        self.parser.add_argument('-f', '--force', action='store_true', help='Force reprocessing')
+        self.args = self.parser.parse_args()
 
-        archive - Uses the mediasize variable set in conf/config.ini to create sized volumes in the archive directory and moves files accordingly
+        print(f"Command: {self.args.command}")
+        log.info(f"Command: {self.args.command}")
 
-        validate - Does the reverse of the above actions by rehashing and comparing each marked duplicate file to all files in all structures, moves matches to the validated directory
-
-        daily -   Combines the above functions into a re-usable automated workflow for use with scheduled jobs
-
-        Options:
-        -m        Enable the monitoring interface (curses-based progress display)
-        ''')
-        parser.add_argument('-m', action='store_true', help='Enable the monitoring interface (curses-based progress display)')
-        parser.add_argument('command', help='Subcommand to run')
-        log.debug("Parsing command-line arguments")
-        args = parser.parse_args()
-        self.enable_monitor = args.m
-        if not hasattr(self, args.command):
-            print('Unrecognized command')
-            parser.print_help()
-            exit(1)
-
-        # Re-initialize monitor based on -m flag
-        if self.enable_monitor and self.monitor is None:
-            try:
-                log.debug("Attempting to initialize ProgressMonitor after -m flag")
-                self.monitor = ProgressMonitor()
-                self.monitor.start()
-                log.debug("ProgressMonitor started successfully")
-            except Exception as e:
-                log.error(f"Failed to initialize ProgressMonitor: {e}")
-                log.info("Falling back to logging-only mode")
-
-        # Assess Command Argument
-        log.info("Command: %s" % (args.command))
-        try:
-            log.debug(f"Executing command: {args.command}")
-            getattr(self, args.command)()
-            log.debug(f"Command {args.command} executed successfully")
-        except Exception as e:
-            log.error(f"Command {args.command} failed: {e}")
-            raise
-        finally:
-            if self.monitor:
-                log.debug("Stopping ProgressMonitor")
-                self.monitor.stop()
-                log.debug("ProgressMonitor stopped")
+        # Execute the command
+        log.debug(f"Executing command: {self.args.command}")
+        getattr(self, self.args.command)()
 
     def crawl(self):
-        print("Crawling")
-        log = logging.getLogger(__name__)
-        log.debug("Starting crawl command")
-        # the crawl function performs a hash index of all files in the target directories
-        parser = argparse.ArgumentParser(description='Crawl the dirs and create a hash index')
-        parser.add_argument('-f', '--force', action='store_true', default=False, help='forces indexing of all directories')
-        parser.add_argument('-p', '--path', help='pass a directory to crawl')
-        args = parser.parse_args(sys.argv[2:])
-        # Crawl a provided directory
-        if args.path:
-            crawl.crawl(args.force, args.path, jsondatadir, monitor=self.monitor)
-        else:
-            ingestsum = crawl.crawl(args.force, ingestdir, jsondatadir, monitor=self.monitor)
-            workingdirsum = crawl.crawl(args.force, workingdir, jsondatadir, monitor=self.monitor)
-            archivedirsum = crawl.crawl(args.force, archivedir, jsondatadir, monitor=self.monitor)
+        """Execute the crawl command."""
+        log.debug("Crawl command starting")
+        crawl.crawl(force=self.args.force, rootdir=self.ingestdir, datadir=self.datadir, monitor=self.monitor)
+        crawl.crawl(force=self.args.force, rootdir=self.workingdir, datadir=self.datadir, monitor=self.monitor)
+        crawl.crawl(force=self.args.force, rootdir=self.archivedir, datadir=self.datadir, monitor=self.monitor)
         log.debug("Crawl command completed")
 
-    def ingest(self):
-        print("Ingesting Files")
-        log = logging.getLogger(__name__)
-        log.debug("Starting ingest command")
-        # the ingest function sorts and moves files by date into the working/media directory
-        ingest.ingest(ingestdir, workingdir, monitor=self.monitor)
-        log.debug("Ingest command completed")
-
     def dedupe(self):
-        print("Dedupping")
-        log = logging.getLogger(__name__)
+        """Execute the dedupe command."""
         log.debug("Starting dedupe command")
-        # the dedupe function combines all hash indexes and analyzes the dataset for duplicates
-        data_files = glob.glob(jsondatadir + '/*.json')
-        # run the dedupe function
-        dedupe.dedupe(data_files, duplicatedir, archivedir, monitor=self.monitor)
+        data_files = [
+            os.path.join(self.datadir, 'ingest_index.json'),
+            os.path.join(self.datadir, 'media_index.json'),
+            os.path.join(self.datadir, 'archive_index.json')
+        ]
+        dedupe.dedupe(data_files, self.duplicatedir, self.archivedir, self.ingestdir, monitor=self.monitor)
         log.debug("Dedupe command completed")
 
-    def archive(self):
-        print("Archiving")
-        log = logging.getLogger(__name__)
-        log.debug("Starting archive command")
-        # the archive function pulls from the working/media directory and pools into sized volumes
-        archive.archive(archivedir, jsondatadir, workingdir, mediasize, monitor=self.monitor)
-        log.debug("Archive command completed")
-
-    def validate(self):
-        print("Validating - This can take awhile")
-        log = logging.getLogger(__name__)
-        log.debug("Starting validate command")
-        validate.validate(duplicatedir, workingdir, archivedir, validateddir, monitor=self.monitor)
-        log.debug("Validate command completed")
-
-    def test(self):
-        print("Running Full Test Sequence")
-        log = logging.getLogger(__name__)
-        log.debug("Starting test command")
-        # the ingest function sorts and moves files by date into the working/media directory
-        ingest.ingest(ingestdir, workingdir, monitor=self.monitor)
-
-        # the crawl function performs a hash index of all files in the target directories
-        workingdirsum = crawl.crawl(True, workingdir, jsondatadir, monitor=self.monitor)
-        archivedirsum = crawl.crawl(False, archivedir, jsondatadir, monitor=self.monitor)
-
-        # the dedupe function combines all hash indexes and analyzes the dataset for duplicates
-        data_files = glob.glob(jsondatadir + '/*.json')
-        # run the dedupe function
-        dedupe.dedupe(data_files, duplicatedir, monitor=self.monitor)
-
-        # after the dedupe function has moved duplicates out, reindex
-        workingdirsum = crawl.crawl(True, workingdir, jsondatadir, monitor=self.monitor)
-
-        # the archive function pulls from the working/media directory and pools into sized volumes
-        archive.archive(archivedir, jsondatadir, workingdir, mediasize, monitor=self.monitor)
-
-        # validate that all files in duplicates exist elsewhere before moving to validated
-        validate.validate(duplicatedir, workingdir, archivedir, validateddir, monitor=self.monitor)
-
-        print("Daily Job Completed Successfully")
-        log.debug("Test command completed")
-
-    def daily(self):
-        print("Running Daily Job")
-        log = logging.getLogger(__name__)
-        log.debug("Starting daily command")
-        # the ingest function sorts and moves files by date into the working/media directory
-        ingest.ingest(ingestdir, workingdir, monitor=self.monitor)
-
-        # the crawl function performs a hash index of all files in the target directories
-        workingdirsum = crawl.crawl(True, workingdir, jsondatadir, monitor=self.monitor)
-        archivedirsum = crawl.crawl(False, archivedir, jsondatadir, monitor=self.monitor)
-
-        # the dedupe function combines all hash indexes and analyzes the dataset for duplicates
-        data_files = glob.glob(jsondatadir + '/*.json')
-        # run the dedupe function
-        dedupe.dedupe(data_files, duplicatedir, monitor=self.monitor)
-
-        # after the dedupe function has moved duplicates out, reindex
-        # workingdirsum = crawl.crawl(True, workingdir, jsondatadir, monitor=self.monitor)
-
-        # the archive function pulls from the working/media directory and pools into sized volumes
-        # archive.archive(archivedir, jsondatadir, workingdir, mediasize, monitor=self.monitor)
-
-        # validate that all files in duplicates exist elsewhere before moving to validated
-        # validate.validate(duplicatedir, workingdir, archivedir, validateddir, monitor=self.monitor)
-        log.debug("Daily command completed")
-
 def main():
-    """Entry point for the mediastruct command-line script."""
     log.debug("Entering main function")
-    # Parse the -m flag early to pass to mediastruct_init
-    parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument('-m', action='store_true', help='Enable the monitoring interface (curses-based progress display)')
-    args, remaining = parser.parse_known_args()
-    sys.argv = [sys.argv[0]] + remaining  # Remove -m from sys.argv for subsequent parsing
-    mediastruct_init(enable_monitor=args.m)
+    mediastruct_instance = mediastruct()
     log.debug("Exiting main function")
 
-if __name__ == '__main__':
-    log.debug("Script entry point reached")
+if __name__ == "__main__":
     main()
-    log.debug("Script execution completed")

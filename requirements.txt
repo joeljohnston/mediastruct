@@ -3,3 +3,5 @@ pillow
 configparser
 xxhash
 pyyaml
+psutil
+timeout-decorator
