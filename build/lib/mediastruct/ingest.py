@@ -1,88 +1,115 @@
 import os
-import sys
-import time
-import shutil
 import logging
-from glob import glob
+import xxhash
+import shutil
+import time
+from datetime import datetime
+from pathlib import Path
 
 log = logging.getLogger(__name__)
-log.info('Ingest - Launching the Ingest Class')
 
 class ingest:
-    '''The ingest class manages contents entering the workflow by organizing files by their last modified date
-    into the working directory / media directory'''
-
-    def __init__(self, _sourcedir, _destdir, monitor=None):
+    def __init__(self, source_dir, target_dir, monitor=None):
+        self.source_dir = source_dir
+        self.target_dir = target_dir
         self.monitor = monitor
-        # Setup logging for this child class
-        log = logging.getLogger(__name__)
-        if self.monitor:
-            self.monitor.update_progress("ingest", status="Starting", processed=0, total=0, current="Initializing ingest process")
-        self.mvrnm(_sourcedir, _destdir)
-        if self.monitor:
-            self.monitor.update_progress("ingest", status="Completed", processed=100, total=100, current="Ingest finished")
+        self._log_progress(f"Initialized ingest with source_dir: {self.source_dir}, target_dir: {self.target_dir}")
 
-    def mvrnm(self, sourcedir, destdir):
-        '''This function ensures that no data is lost via file collisions as files are moved into the working dir
-        by renaming them with a .<unixdatetimestamp> addition to the existing filename'''
-        log.info("Ingest - Directory root: %s" % (sourcedir))
-        # Ensure the source directory exists
-        if not os.path.isdir(sourcedir):
-            log.error("Ingest - Source Directory {} doesn't exist".format(sourcedir))
-            if self.monitor:
-                self.monitor.update_progress("ingest", status="Failed", processed=0, total=0, current="Source directory does not exist")
-            return
+        # Ensure source directory exists
+        try:
+            Path(self.source_dir).mkdir(parents=True, exist_ok=True)
+            self._log_progress(f"Created source directory: {self.source_dir}")
+        except Exception as e:
+            self._log_progress(f"Failed to create source directory {self.source_dir}: {e}", "error")
+            raise
 
-        # Count total files for progress calculation
-        total_files = sum(len(files) for folder, _, files in os.walk(sourcedir))
+        # Ensure target directory exists
+        try:
+            Path(self.target_dir).mkdir(parents=True, exist_ok=True)
+            self._log_progress(f"Created target directory: {self.target_dir}")
+        except Exception as e:
+            self._log_progress(f"Failed to create target directory {self.target_dir}: {e}", "error")
+            raise
+
+        self.process_files()
+
+    def _log_progress(self, message, level="info"):
+        """Log progress messages and print to console."""
+        print(f"Ingest - {message}")
+        getattr(log, level)(message)
+
+    def _hash_file(self, file_path):
+        """Compute the xxhash of a file."""
+        try:
+            with open(file_path, 'rb') as f:
+                hasher = xxhash.xxh64()
+                chunk_size = 1024 * 1024  # 1 MB chunks
+                while True:
+                    chunk = f.read(chunk_size)
+                    if not chunk:
+                        break
+                    hasher.update(chunk)
+                return hasher.hexdigest()
+        except Exception as e:
+            self._log_progress(f"Failed to hash file {file_path}: {e}", "error")
+            return None
+
+    def process_files(self):
+        """Process files in the source directory, renaming and organizing by date."""
+        self._log_progress("Starting file processing")
+        total_files = sum(len(files) for _, _, files in os.walk(self.source_dir))
         processed_files = 0
 
         if self.monitor:
-            self.monitor.update_progress("ingest", status="Running", processed=0, total=total_files, current="Starting file ingestion")
+            self.monitor.update_progress("ingest", status="Running", processed=0, total=total_files, current=f"Processing files in {self.source_dir}")
 
-        # Loop through contents of the ingest directory
-        for folder, subs, files in os.walk(sourcedir):
+        for root, _, files in os.walk(self.source_dir):
             for filename in files:
-                # Split the filename up
-                ext = os.path.splitext(filename)[1][1:]
-                newfile = os.path.splitext(filename)[0]
-                # Rename the file with a unique timestamp-based name
-                millis = int(round(time.time() * 1000))
-                newfilename = "%s.%s.%s" % (newfile, millis, ext)
-                log.info("Ingest - oldfilename: %s" % (filename))
-                log.info("Ingest - newfilename: %s" % (newfilename))
-                # New file path
-                filepath = "%s/%s" % (folder, filename)
-                try:
-                    ftime = time.gmtime(os.path.getmtime(filepath))
-                except Exception as e:
-                    log.error(f"Ingest - Failed to get mtime for {filepath}: {e}")
+                source_path = os.path.join(root, filename)
+                if not os.path.isfile(source_path):
+                    self._log_progress(f"Skipping non-file: {source_path}", "warning")
                     continue
 
-                # Create date-based year and month directories as needed
-                ctime_dir = "%s/%s" % (str(ftime.tm_year), str(ftime.tm_mon))
-                dest_dir = "%s/%s" % (destdir, ctime_dir)
-                dest = "%s/%s/%s" % (destdir, ctime_dir, filename)
-                newdest = "%s/%s" % (dest_dir, newfilename)
+                # Compute hash
+                file_hash = self._hash_file(source_path)
+                if not file_hash:
+                    self._log_progress(f"Skipping file due to hash failure: {source_path}", "warning")
+                    continue
 
+                # Get file modification time
                 try:
-                    if not os.path.exists(dest_dir):
-                        os.makedirs(dest_dir)
-                    if not os.path.exists(dest):
-                        log.info('Ingest - Moving %s from %s to %s' % (ext, filename, dest))
-                        shutil.move(filepath, dest)
-                    else:
-                        log.info("Ingest - Duplicate Name found - new path: %s" % (newdest))
-                        shutil.move(filepath, newdest)
+                    mtime = os.path.getmtime(source_path)
+                    date = datetime.fromtimestamp(mtime)
+                    year = date.strftime("%Y")
+                    month = date.strftime("%m")
                 except Exception as e:
-                    log.error(f"Ingest - Failed to move {filepath} to {dest} or {newdest}: {e}")
+                    self._log_progress(f"Failed to get modification time for {source_path}: {e}", "error")
+                    continue
+
+                # Construct target directory
+                target_subdir = os.path.join(self.target_dir, year, month)
+                try:
+                    Path(target_subdir).mkdir(parents=True, exist_ok=True)
+                except Exception as e:
+                    self._log_progress(f"Failed to create target directory {target_subdir}: {e}", "error")
+                    continue
+
+                # Construct new filename with datetime hash
+                ext = os.path.splitext(filename)[1]
+                new_filename = f"{date.strftime('%Y%m%d_%H%M%S')}_{file_hash}{ext}"
+                target_path = os.path.join(target_subdir, new_filename)
+
+                # Move the file
+                try:
+                    shutil.move(source_path, target_path)
+                    self._log_progress(f"Moved file: {source_path} -> {target_path}")
+                except Exception as e:
+                    self._log_progress(f"Failed to move file {source_path} to {target_path}: {e}", "error")
                     continue
 
                 processed_files += 1
                 if self.monitor and total_files > 0:
-                    self.monitor.update_progress("ingest", status="Running", processed=processed_files, total=total_files, current=f"Moving file: {filename}")
-                # Add a small delay to simulate a slower operation (for testing)
-                time.sleep(0.1)  # 100ms delay per file
+                    self.monitor.update_progress("ingest", status="Running", processed=processed_files, total=total_files, current=f"Processed file: {filename}")
+                self._log_progress(f"Processed {processed_files}/{total_files} files ({(processed_files/total_files)*100:.1f}%)")
 
-        if self.monitor and total_files > 0:
-            self.monitor.update_progress("ingest", status="Running", processed=processed_files, total=total_files, current="Finishing ingestion")
+        self._log_progress("File processing completed")
