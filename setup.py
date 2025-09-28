@@ -1,25 +1,7 @@
 from setuptools import setup, find_packages
-import subprocess
 import sys
 import os
 from pathlib import Path
-
-# Ensure dependencies are installed from requirements.txt
-def install_requirements():
-    """Install dependencies from requirements.txt."""
-    requirements_file = "requirements.txt"
-    if os.path.isfile(requirements_file):
-        try:
-            subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", requirements_file])
-            print("Successfully installed dependencies from requirements.txt")
-        except subprocess.CalledProcessError as e:
-            print(f"Error installing dependencies: {e}")
-            sys.exit(1)
-    else:
-        print(f"requirements.txt not found at {requirements_file}, skipping dependency installation")
-
-# Install requirements before proceeding with setup
-install_requirements()
 
 # Prepare data files for installation
 config_path = "mediastruct/conf/config.ini"

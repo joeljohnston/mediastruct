@@ -19,3 +19,4 @@ mediastruct.egg-info/dependency_links.txt
 mediastruct.egg-info/entry_points.txt
 mediastruct.egg-info/requires.txt
 mediastruct.egg-info/top_level.txt
+tests/test.py

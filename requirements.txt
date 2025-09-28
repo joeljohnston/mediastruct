@@ -2,6 +2,6 @@ dicttools
 pillow
 configparser
 xxhash
-pyyaml
 psutil
+pyyaml==6.0.1
 timeout-decorator
